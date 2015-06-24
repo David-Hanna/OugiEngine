@@ -4,7 +4,7 @@
 // Matrix3x3.h
 //--------------------------------------------------------------------------------
 
-#include "..\Vectors\Vector3.h"
+#include "Vector3.h"
 
 namespace HM
 {

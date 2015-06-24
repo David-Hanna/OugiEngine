@@ -4,7 +4,7 @@
 // Matrix2x2.h
 //--------------------------------------------------------------------------------
 
-#include "..\Vectors\Vector2.h"
+#include "Vector2.h"
 
 namespace HM
 {

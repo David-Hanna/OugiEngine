@@ -6,7 +6,7 @@
 
 #include <ostream>
 
-#include "..\Functions\FundamentalFunctions.h"
+#include "Functions.h"
 
 namespace HM
 {
