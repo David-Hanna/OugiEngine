@@ -1,6 +1,6 @@
-#include "FundamentalFunctions.h"
+#include "Functions.h"
 
-float HM::sqrt(float arg)
+float Ougi::sqrt(float arg)
 {
 	const float arghalf = 0.5f*arg;
 
@@ -15,7 +15,7 @@ float HM::sqrt(float arg)
 	return arg*u.x*(1.5f - arghalf*u.x*u.x);// Newton step, repeating increases accuracy
 }
 
-float HM::invsqrt(float arg)
+float Ougi::invsqrt(float arg)
 {
 	long i;
 	float x2, y;

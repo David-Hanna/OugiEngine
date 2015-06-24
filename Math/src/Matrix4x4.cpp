@@ -1,6 +1,6 @@
 #include "Matrix4x4.h"
 
-HM::Vector4 HM::Matrix4x4::operator*(const HM::Vector4& multiplier)
+Ougi::Vector4 Ougi::Matrix4x4::operator*(const Ougi::Vector4& multiplier)
 {
 	return Vector4(
 		(a.x * multiplier.x) + (b.x * multiplier.y) + (c.x * multiplier.z) + (d.x * multiplier.w),
@@ -10,7 +10,7 @@ HM::Vector4 HM::Matrix4x4::operator*(const HM::Vector4& multiplier)
 	);
 }
 
-HM::Matrix4x4 HM::Matrix4x4::operator*(const HM::Matrix4x4& multiplier)
+Ougi::Matrix4x4 Ougi::Matrix4x4::operator*(const Ougi::Matrix4x4& multiplier)
 {
 	return Matrix4x4(
 		Vector4(
@@ -40,7 +40,7 @@ HM::Matrix4x4 HM::Matrix4x4::operator*(const HM::Matrix4x4& multiplier)
 	);
 }
 
-HM::Matrix4x4 HM::Matrix4x4::operator*=(const HM::Matrix4x4& multiplier)
+Ougi::Matrix4x4 Ougi::Matrix4x4::operator*=(const Ougi::Matrix4x4& multiplier)
 {
 	a.x = (a.x * multiplier.a.x) + (a.y * multiplier.b.x) + (a.z * multiplier.c.x) + (a.w * multiplier.d.x);
 	a.y = (a.x * multiplier.a.y) + (a.y * multiplier.b.y) + (a.z * multiplier.c.y) + (a.w * multiplier.d.y);

@@ -35,7 +35,7 @@ namespace HM
 		bool equals(const Vector4& rhs, const float toleranceSquared = 0.0f) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z) + (w * w); }
-		float Length() const										{ return HM::sqrt(LengthSquared()); }
+		float Length() const										{ return Ougi::sqrt(LengthSquared()); }
 
 		void Normalize();
 		Vector4 Normalized() const;
@@ -44,7 +44,7 @@ namespace HM
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const HM::Vector4& vec)
+std::ostream& operator<<(std::ostream& out, const Ougi::Vector4& vec)
 {
 	return out << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
 }

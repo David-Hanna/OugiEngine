@@ -1,6 +1,6 @@
 #include "Matrix3x3.h"
 
-HM::Vector3 HM::Matrix3x3::operator*(const HM::Vector3& multiplier)
+Ougi::Vector3 Ougi::Matrix3x3::operator*(const Ougi::Vector3& multiplier)
 {
 	return Vector3(
 		(a.x * multiplier.x) + (b.x * multiplier.y) + (c.x * multiplier.z),
@@ -9,7 +9,7 @@ HM::Vector3 HM::Matrix3x3::operator*(const HM::Vector3& multiplier)
 	);
 }
 
-HM::Matrix3x3 HM::Matrix3x3::operator*(const HM::Matrix3x3& multiplier)
+Ougi::Matrix3x3 Ougi::Matrix3x3::operator*(const Ougi::Matrix3x3& multiplier)
 {
 	return Matrix3x3(
 		Vector3(
@@ -30,7 +30,7 @@ HM::Matrix3x3 HM::Matrix3x3::operator*(const HM::Matrix3x3& multiplier)
 	);
 }
 
-HM::Matrix3x3 HM::Matrix3x3::operator*=(const HM::Matrix3x3& multiplier)
+Ougi::Matrix3x3 Ougi::Matrix3x3::operator*=(const Ougi::Matrix3x3& multiplier)
 {
 	a.x = (a.x * multiplier.a.x) + (a.y * multiplier.b.x) + (a.z * multiplier.c.x);
 	a.y = (a.x * multiplier.a.y) + (a.y * multiplier.b.y) + (a.z * multiplier.c.y);

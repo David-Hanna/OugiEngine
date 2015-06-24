@@ -1,6 +1,6 @@
 #include "Vector4.h"
 
-bool HM::Vector4::equals(const HM::Vector4& rhs, const float toleranceSquared) const
+bool Ougi::Vector4::equals(const Ougi::Vector4& rhs, const float toleranceSquared) const
 {
 	float diff = x - rhs.x;
 	if (diff * diff > toleranceSquared)
@@ -21,17 +21,17 @@ bool HM::Vector4::equals(const HM::Vector4& rhs, const float toleranceSquared) c
 	return true;
 }
 
-void HM::Vector4::Normalize()
+void Ougi::Vector4::Normalize()
 {
-	float inverseLength = HM::invsqrt((x * x) + (y * y) + (z * z) + (w * w));
+	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z) + (w * w));
 	x *= inverseLength;
 	y *= inverseLength;
 	z *= inverseLength;
 	w *= inverseLength;
 }
 
-HM::Vector4 HM::Vector4::Normalized() const
+Ougi::Vector4 Ougi::Vector4::Normalized() const
 {
-	float inverseLength = HM::invsqrt((x * x) + (y * y) + (z * z) + (w * w));
+	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z) + (w * w));
 	return Vector4(x * inverseLength, y * inverseLength, z * inverseLength, w * inverseLength);
 }

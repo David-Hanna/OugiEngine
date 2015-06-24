@@ -37,7 +37,7 @@ namespace HM
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const HM::Matrix4x4& mat)
+std::ostream& operator<<(std::ostream& out, const Ougi::Matrix4x4& mat)
 {
 	return out << "[" << mat.a << ", " << mat.b << ", " << mat.c << ", " << mat.d << "]";
 }

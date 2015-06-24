@@ -1,75 +1,75 @@
 #include "Matrix2x2.h"
 
-HM::Matrix2x2::Matrix2x2()
+Ougi::Matrix2x2::Matrix2x2()
 {
 	matrix[0][0] = 0; matrix[0][1] = 0;
 	matrix[1][0] = 0; matrix[1][1] = 0;
 }
 
-HM::Matrix2x2::Matrix2x2(const float _00, const float _01, const float _10, const float _11)
+Ougi::Matrix2x2::Matrix2x2(const float _00, const float _01, const float _10, const float _11)
 {
 	matrix[0][0] = _00; matrix[0][1] = _01;
 	matrix[1][0] = _10; matrix[1][1] = _11;
 }
 
-HM::Matrix2x2::Matrix2x2(const float _matrix[2][2])
+Ougi::Matrix2x2::Matrix2x2(const float _matrix[2][2])
 {
 	matrix[0][0] = _matrix[0][0]; matrix[0][1] = _matrix[0][1];
 	matrix[1][0] = _matrix[1][0]; matrix[1][1] = _matrix[1][1];
 }
 
-HM::Matrix2x2::Matrix2x2(const HM::Vector2& a, const HM::Vector2& b)
+Ougi::Matrix2x2::Matrix2x2(const Ougi::Vector2& a, const Ougi::Vector2& b)
 {
 	matrix[0][0] = a.x; matrix[0][1] = a.y;
 	matrix[1][0] = b.x; matrix[1][1] = b.y;
 }
 
-HM::Matrix2x2::Matrix2x2(const HM::Matrix2x2& other)
+Ougi::Matrix2x2::Matrix2x2(const Ougi::Matrix2x2& other)
 {
 	matrix[0][0] = other[0][0]; matrix[0][1] = other[0][1];
 	matrix[1][0] = other[1][0]; matrix[1][1] = other[1][1];
 }
 
-HM::Matrix2x2& HM::Matrix2x2::operator=(const HM::Matrix2x2& other)
+Ougi::Matrix2x2& Ougi::Matrix2x2::operator=(const Ougi::Matrix2x2& other)
 {
 	matrix[0][0] = other[0][0]; matrix[0][1] = other[0][1];
 	matrix[1][0] = other[1][0]; matrix[1][1] = other[1][1];
 	return *this;
 }
 
-HM::Matrix2x2 HM::Matrix2x2::operator-() const
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator-() const
 {
-	return HM::Matrix2x2(
+	return Ougi::Matrix2x2(
 		-matrix[0][0], -matrix[0][1],
 		-matrix[1][0], -matrix[1][1]
 	);
 }
 
-HM::Matrix2x2 HM::Matrix2x2::operator+(const HM::Matrix2x2& addend) const
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator+(const Ougi::Matrix2x2& addend) const
 {
-	return HM::Matrix2x2(
+	return Ougi::Matrix2x2(
 		matrix[0][0] + addend[0][0], matrix[0][1] + addend[0][1],
 		matrix[1][0] + addend[1][0], matrix[1][1] + addend[1][1]
 	);
 }
 
-HM::Matrix2x2 HM::Matrix2x2::operator-(const HM::Matrix2x2& subtrahend) const
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator-(const Ougi::Matrix2x2& subtrahend) const
 {
-	return HM::Matrix2x2(
+	return Ougi::Matrix2x2(
 		matrix[0][0] - subtrahend[0][0], matrix[0][1] - subtrahend[0][1],
 		matrix[1][0] - subtrahend[1][0], matrix[1][1] - subtrahend[1][1]
 	);
 }
 
-HM::Matrix2x2 HM::Matrix2x2::operator*(const float multiplier) const
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator*(const float multiplier) const
 {
-	return HM::Matrix2x2(
+	return Ougi::Matrix2x2(
 		matrix[0][0] * multiplier, matrix[0][1] * multiplier,
 		matrix[1][0] * multiplier, matrix[1][1] * multiplier
 	);
 }
 
-HM::Vector2 HM::Matrix2x2::operator*(const HM::Vector2& multiplier)
+Ougi::Vector2 Ougi::Matrix2x2::operator*(const Ougi::Vector2& multiplier)
 {
 	return Vector2(
 		(matrix[0][0] * multiplier.x) + (matrix[1][0] * multiplier.y),
@@ -77,7 +77,7 @@ HM::Vector2 HM::Matrix2x2::operator*(const HM::Vector2& multiplier)
 	);
 }
 
-HM::Matrix2x2 HM::Matrix2x2::operator*(const HM::Matrix2x2& multiplier)
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator*(const Ougi::Matrix2x2& multiplier)
 {
 	return Matrix2x2(
 		Vector2(
@@ -97,7 +97,7 @@ Matrix2x2 operator+=(const Matrix2x2& addend);
 Matrix2x2 operator-=(const Matrix2x2& subtrahend);
 Matrix2x2 operator*=(const float multiplier);
 
-HM::Matrix2x2 HM::Matrix2x2::operator*=(const HM::Matrix2x2& multiplier)
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator*=(const Ougi::Matrix2x2& multiplier)
 {
 	a.x = (a.x * multiplier.a.x) + (a.y * multiplier.b.x);
 	a.y = (a.x * multiplier.a.y) + (a.y * multiplier.b.y);

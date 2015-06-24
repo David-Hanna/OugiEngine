@@ -1,9 +1,9 @@
 #pragma once
 //-------------------------------------------------------------------------------------------
-// FundamentalFunctions - defines fundamental mathematical functions
+// Functions - defines fundamental mathematical functions
 //-------------------------------------------------------------------------------------------
 
-namespace HM
+namespace Ougi
 {
 	float sqrt(float arg);
 	float invsqrt(float arg);
