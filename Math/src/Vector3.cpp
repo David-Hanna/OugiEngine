@@ -1,28 +1,29 @@
-#include "Vector3.h"
+#include "../include/Vector3.h"
 
-bool Ougi::Vector3::equals(const Ougi::Vector3& rhs, const float toleranceSquared) const
+bool Ougi::Vector3::equals(const Ougi::Vector3& rhs, const float tolerance) const
 {
-	float diff = x - rhs.x;
-	if (diff * diff > toleranceSquared)
+	float diff = Ougi::abs(x - rhs.x);
+	if (diff > tolerance)
 		return false;
 
-	diff = y - rhs.y;
-	if (diff * diff > toleranceSquared)
+	diff = Ougi::abs(y - rhs.y);
+	if (diff > tolerance)
 		return false;
 
-	diff = z - rhs.z;
-	if (diff * diff > toleranceSquared)
+	diff = Ougi::abs(z - rhs.z);
+	if (diff > tolerance)
 		return false;
 
 	return true;
 }
 
-void Ougi::Vector3::Normalize()
+Ougi::Vector3 Ougi::Vector3::Normalize()
 {
 	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z));
 	x *= inverseLength;
 	y *= inverseLength;
 	z *= inverseLength;
+	return (*this);
 }
 
 Ougi::Vector3 Ougi::Vector3::Normalized() const

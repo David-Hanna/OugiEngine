@@ -1,43 +1,55 @@
-#pragma once
-
+#ifndef OUGI_MATRIX3X3_H
+#define OUGI_MATRIX3X3_H
 //--------------------------------------------------------------------------------
 // Matrix3x3.h
 //--------------------------------------------------------------------------------
 
-#include "Vector3.h"
+#include "../include/Functions.h"
+#include "../include/Vector3.h"
 
-namespace HM
+namespace Ougi
 {
 	class Matrix3x3
 	{
 	public:
-		Vector3 a, b, c;
+		float matrix[3][3];
 
 	public:
-		Matrix3x3()														: a(), b(), c()   {}
-		Matrix3x3(const Vector3 _a, const Vector3 _b, const Vector3 _c) : a(_a), b(_b), c(_c) {}
+		Matrix3x3();
+		Matrix3x3(const float _00, const float _01, const float _02,
+				  const float _10, const float _11, const float _12,
+				  const float _20, const float _21, const float _22);
+		Matrix3x3(const float _matrix[3][3]);
+		Matrix3x3(const Matrix3x3& other);
+		
+		Matrix3x3& operator=(const Matrix3x3& other);
 
-		Matrix3x3 operator-() const										{ return Matrix3x3(-a, -b, -c); }
+		float*       operator[](const unsigned int index)       { return matrix[index]; }
+		float const* operator[](const unsigned int index) const { return matrix[index]; }
 
-		Matrix3x3 operator+(const Matrix3x3& addend) const				{ return Matrix3x3(a + addend.a, b + addend.b, c + addend.c); }
-		Matrix3x3 operator-(const Matrix3x3& subtrahend) const			{ return Matrix3x3(a - subtrahend.a, b - subtrahend.b, c - subtrahend.c); }
-		Matrix3x3 operator*(const float multiplier)	const				{ return Matrix3x3(a * multiplier, b * multiplier, c * multiplier); }
-		Vector3   operator*(const Vector3& multiplier);
-		Matrix3x3 operator*(const Matrix3x3& multiplier);
-		Matrix3x3 operator/(const float divisor) const					{ return Matrix3x3(a / divisor, b / divisor, c / divisor); }
+		Matrix3x3 operator-() const;
 
-		Matrix3x3 operator+=(const Matrix3x3& addend)					{ a += addend.a; b += addend.b; c += addend.c; return *this; }
-		Matrix3x3 operator-=(const Matrix3x3& subtrahend)				{ a -= subtrahend.a; b -= subtrahend.b; c -= subtrahend.c; return *this; }
-		Matrix3x3 operator*=(const float multiplier)					{ a *= multiplier; b *= multiplier; c *= multiplier; return *this; }
+		Matrix3x3 operator+(const Matrix3x3& addend) const;
+		Matrix3x3 operator-(const Matrix3x3& subtrahend) const;
+		Matrix3x3 operator*(const float multiplier)	const;
+		Vector3   operator*(const Vector3& multiplier) const;
+		Matrix3x3 operator*(const Matrix3x3& multiplier) const;
+		Matrix3x3 operator/(const float divisor) const;
+
+		Matrix3x3 operator+=(const Matrix3x3& addend);
+		Matrix3x3 operator-=(const Matrix3x3& subtrahend);
+		Matrix3x3 operator*=(const float multiplier);
 		Matrix3x3 operator*=(const Matrix3x3& multiplier);
-		Matrix3x3 operator/=(const float divisor)						{ a /= divisor; b /= divisor; c /= divisor; return *this; }
+		Matrix3x3 operator/=(const float divisor);
 
-		bool operator==(const Matrix3x3& rhs) const						{ return (a == rhs.a) && (b == rhs.b) && (c == rhs.c); }
-		bool equals(const Matrix3x3& rhs, const float tolerance)		{ return (a.equals(rhs.a, tolerance)) && (b.equals(rhs.b, tolerance)) && (c.equals(rhs.c, tolerance)); }
+		bool operator==(const Matrix3x3& rhs) const;
+		bool equals(const Matrix3x3& rhs, const float tolerance) const;
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const Ougi::Matrix3x3& mat)
+inline std::ostream& operator<<(std::ostream& out, const Ougi::Matrix3x3& matrix)
 {
-	return out << "[" << mat.a << ", " << mat.b << ", " << mat.c << "]";
+	return out << "[(" << matrix[0][0] << ", " << matrix[0][1] << ", " << matrix[0][2] << "), (" << matrix[1][0] << ", " << matrix[1][1] << ", " << matrix[1][2] << "), (" << matrix[2][0] << ", " << matrix[2][1] << ", " << matrix[2][2] << ")]";
 }
+
+#endif

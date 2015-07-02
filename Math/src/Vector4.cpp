@@ -1,33 +1,34 @@
-#include "Vector4.h"
+#include "../include/Vector4.h"
 
-bool Ougi::Vector4::equals(const Ougi::Vector4& rhs, const float toleranceSquared) const
+bool Ougi::Vector4::equals(const Ougi::Vector4& rhs, const float tolerance) const
 {
-	float diff = x - rhs.x;
-	if (diff * diff > toleranceSquared)
+	float diff = Ougi::abs(x - rhs.x);
+	if (diff > tolerance)
 		return false;
 
-	diff = y - rhs.y;
-	if (diff * diff > toleranceSquared)
+	diff = Ougi::abs(y - rhs.y);
+	if (diff > tolerance)
 		return false;
 
-	diff = z - rhs.z;
-	if (diff * diff > toleranceSquared)
+	diff = Ougi::abs(z - rhs.z);
+	if (diff > tolerance)
 		return false;
 
-	diff = w - rhs.w;
-	if (diff * diff > toleranceSquared)
+	diff = Ougi::abs(w - rhs.w);
+	if (diff > tolerance)
 		return false;
 
 	return true;
 }
 
-void Ougi::Vector4::Normalize()
+Ougi::Vector4 Ougi::Vector4::Normalize()
 {
 	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z) + (w * w));
 	x *= inverseLength;
 	y *= inverseLength;
 	z *= inverseLength;
 	w *= inverseLength;
+	return (*this);
 }
 
 Ougi::Vector4 Ougi::Vector4::Normalized() const

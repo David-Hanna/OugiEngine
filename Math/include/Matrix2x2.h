@@ -1,12 +1,13 @@
-#pragma once
-
+#ifndef OUGI_MATRIX2X2_H
+#define OUGI_MATRIX2X2_H
 //--------------------------------------------------------------------------------
 // Matrix2x2.h
 //--------------------------------------------------------------------------------
 
-#include "Vector2.h"
+#include "../include/Functions.h"
+#include "../include/Vector2.h"
 
-namespace HM
+namespace Ougi
 {
 	class Matrix2x2
 	{
@@ -15,23 +16,23 @@ namespace HM
 
 	public:
 		Matrix2x2();
-		Matrix2x2(const float _00, const float _01, const float _10, const float _11);
+		Matrix2x2(const float _00, const float _01, 
+				  const float _10, const float _11);
 		Matrix2x2(const float _matrix[2][2]);
-		Matrix2x2(const Vector2& a, const Vector2& b);
-
 		Matrix2x2(const Matrix2x2& other);
-
+		
 		Matrix2x2& operator=(const Matrix2x2& other);
 
-		float* operator[](const unsigned int index) { return matrix[index]; }
+		float*       operator[](const unsigned int index)       { return matrix[index]; }
+		float const* operator[](const unsigned int index) const { return matrix[index]; }
 
 		Matrix2x2 operator-() const;
 
 		Matrix2x2 operator+(const Matrix2x2& addend) const;
 		Matrix2x2 operator-(const Matrix2x2& subtrahend) const;
 		Matrix2x2 operator*(const float multiplier)	const;
-		Vector2   operator*(const Vector2& multiplier);
-		Matrix2x2 operator*(const Matrix2x2& multiplier);
+		Vector2   operator*(const Vector2& multiplier) const;
+		Matrix2x2 operator*(const Matrix2x2& multiplier) const;
 		Matrix2x2 operator/(const float divisor) const;
 
 		Matrix2x2 operator+=(const Matrix2x2& addend);
@@ -41,11 +42,13 @@ namespace HM
 		Matrix2x2 operator/=(const float divisor);
 
 		bool operator==(const Matrix2x2& rhs) const;
-		bool equals(const Matrix2x2& rhs, const float tolerance);
+		bool equals(const Matrix2x2& rhs, const float tolerance) const;
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const Ougi::Matrix2x2& mat)
+inline std::ostream& operator<<(std::ostream& out, const Ougi::Matrix2x2& matrix)
 {
-	return out << "[(" << mat[0][0] << ", " << mat[0][1] << "), (" << mat[1][0] << ", " << mat[1][1] << ")]";
+	return out << "[(" << matrix[0][0] << ", " << matrix[0][1] << "), (" << matrix[1][0] << ", " << matrix[1][1] << ")]";
 }
+
+#endif

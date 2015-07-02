@@ -1,9 +1,9 @@
-#include "Matrix2x2.h"
+#include "../include/Matrix2x2.h"
 
 Ougi::Matrix2x2::Matrix2x2()
 {
-	matrix[0][0] = 0; matrix[0][1] = 0;
-	matrix[1][0] = 0; matrix[1][1] = 0;
+	matrix[0][0] = 0.0f; matrix[0][1] = 0.0f;
+	matrix[1][0] = 0.0f; matrix[1][1] = 0.0f;
 }
 
 Ougi::Matrix2x2::Matrix2x2(const float _00, const float _01, const float _10, const float _11)
@@ -16,12 +16,6 @@ Ougi::Matrix2x2::Matrix2x2(const float _matrix[2][2])
 {
 	matrix[0][0] = _matrix[0][0]; matrix[0][1] = _matrix[0][1];
 	matrix[1][0] = _matrix[1][0]; matrix[1][1] = _matrix[1][1];
-}
-
-Ougi::Matrix2x2::Matrix2x2(const Ougi::Vector2& a, const Ougi::Vector2& b)
-{
-	matrix[0][0] = a.x; matrix[0][1] = a.y;
-	matrix[1][0] = b.x; matrix[1][1] = b.y;
 }
 
 Ougi::Matrix2x2::Matrix2x2(const Ougi::Matrix2x2& other)
@@ -69,7 +63,7 @@ Ougi::Matrix2x2 Ougi::Matrix2x2::operator*(const float multiplier) const
 	);
 }
 
-Ougi::Vector2 Ougi::Matrix2x2::operator*(const Ougi::Vector2& multiplier)
+Ougi::Vector2 Ougi::Matrix2x2::operator*(const Ougi::Vector2& multiplier) const
 {
 	return Vector2(
 		(matrix[0][0] * multiplier.x) + (matrix[1][0] * multiplier.y),
@@ -77,38 +71,69 @@ Ougi::Vector2 Ougi::Matrix2x2::operator*(const Ougi::Vector2& multiplier)
 	);
 }
 
-Ougi::Matrix2x2 Ougi::Matrix2x2::operator*(const Ougi::Matrix2x2& multiplier)
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator*(const Ougi::Matrix2x2& multiplier) const
 {
 	return Matrix2x2(
-		Vector2(
-			(a.x * multiplier.a.x) + (a.y * multiplier.b.x),
-			(a.x * multiplier.a.y) + (a.y * multiplier.b.y)
-		),
-		Vector2(
-			(b.x * multiplier.a.x) + (b.y * multiplier.b.x),
-			(b.x * multiplier.a.y) + (b.y * multiplier.b.y)
-		)
+		(matrix[0][0] * multiplier[0][0]) + (matrix[0][1] * multiplier[1][0]),
+		(matrix[0][0] * multiplier[0][1]) + (matrix[0][1] * multiplier[1][1]),
+		
+		(matrix[1][0] * multiplier[0][0]) + (matrix[1][1] * multiplier[1][0]),
+		(matrix[1][0] * multiplier[0][1]) + (matrix[1][1] * multiplier[1][1])
 	);
 }
 
-Matrix2x2 operator/(const float divisor) const;
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator/(const float divisor) const
+{
+	return (*this) * (1.0f / divisor);
+}
 
-Matrix2x2 operator+=(const Matrix2x2& addend);
-Matrix2x2 operator-=(const Matrix2x2& subtrahend);
-Matrix2x2 operator*=(const float multiplier);
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator+=(const Matrix2x2& addend)
+{
+	(*this) = (*this) + addend;
+	return (*this);
+}
+
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator-=(const Matrix2x2& subtrahend)
+{
+	(*this) = (*this) - subtrahend;
+	return (*this);
+}
+
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator*=(const float multiplier)
+{
+	(*this) = (*this) * multiplier;
+	return (*this);
+}
 
 Ougi::Matrix2x2 Ougi::Matrix2x2::operator*=(const Ougi::Matrix2x2& multiplier)
 {
-	a.x = (a.x * multiplier.a.x) + (a.y * multiplier.b.x);
-	a.y = (a.x * multiplier.a.y) + (a.y * multiplier.b.y);
-
-	b.x = (b.x * multiplier.a.x) + (b.y * multiplier.b.x);
-	b.y = (b.x * multiplier.a.y) + (b.y * multiplier.b.y);
-
-	return *this;
+	(*this) = (*this) * multiplier;
+	return (*this);
 }
 
-Matrix2x2 operator/=(const float divisor);
+Ougi::Matrix2x2 Ougi::Matrix2x2::operator/=(const float divisor)
+{
+	(*this) = (*this) / divisor;
+	return (*this);
+}
 
-bool operator==(const Matrix2x2& rhs) const;
-bool equals(const Matrix2x2& rhs, const float tolerance);
+bool Ougi::Matrix2x2::operator==(const Matrix2x2& rhs) const
+{
+	return equals(rhs, 0.0f);
+}
+
+bool Ougi::Matrix2x2::equals(const Matrix2x2& rhs, const float tolerance) const
+{
+	bool equal = true; int i = 0; int j = 0;
+	while (equal && i < 2)
+	{
+		while (equal && j < 2)
+		{
+			if (Ougi::abs(matrix[i][j] - rhs[i][j]) > tolerance)
+				equal = false;
+			j++;
+		}
+		i++;
+	}
+	return equal;
+}

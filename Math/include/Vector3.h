@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef OUGI_VECTOR3_H
+#define OUGI_VECTOR3_H
 //--------------------------------------------------------------------------------
 // Vector3.h
 //--------------------------------------------------------------------------------
@@ -8,7 +8,7 @@
 
 #include "Functions.h"
 
-namespace HM
+namespace Ougi
 {
 	class Vector3
 	{
@@ -24,6 +24,7 @@ namespace HM
 		Vector3 operator+(const Vector3& addend) const				{ return Vector3(x + addend.x, y + addend.y, z + addend.z); }
 		Vector3 operator-(const Vector3& subtrahend) const			{ return Vector3(x - subtrahend.x, y - subtrahend.y, z - subtrahend.z); }
 		Vector3 operator*(const float multiplier) const				{ return Vector3(x * multiplier, y * multiplier, z * multiplier); }
+		float   operator*(const Vector3& multiplier) const			{ return Dot(multiplier); }
 		Vector3 operator/(const float divisor) const				{ return Vector3(x / divisor, y / divisor, z / divisor); }
 
 		Vector3 operator+=(const Vector3& addend)					{ x += addend.x; y += addend.y; z += addend.z; return *this; }
@@ -32,12 +33,12 @@ namespace HM
 		Vector3 operator/=(const float divisor)						{ x /= divisor; y /= divisor; z /= divisor; return *this; }
 
 		bool operator==(const Vector3& rhs) const					{ return (x == rhs.x) && (y == rhs.y) && (z == rhs.z); }
-		bool equals(const Vector3& rhs, const float toleranceSquared = 0.0f) const;
+		bool equals(const Vector3& rhs, const float tolerance = 0.0f) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z); }
 		float Length() const										{ return Ougi::sqrt(LengthSquared()); }
 
-		void Normalize();
+		Vector3 Normalize();
 		Vector3 Normalized() const;
 
 		float Dot(const Vector3& multiplier) const					{ return (x * multiplier.x) + (y * multiplier.y) + (z * multiplier.z); }
@@ -45,7 +46,9 @@ namespace HM
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const Ougi::Vector3& vec)
+inline std::ostream& operator<<(std::ostream& out, const Ougi::Vector3& vec)
 {
 	return out << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
 }
+
+#endif

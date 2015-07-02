@@ -1,6 +1,6 @@
-#include "Functions.h"
+#include "../include/Functions.h"
 
-float Ougi::sqrt(float arg)
+float Ougi::sqrt(const float arg)
 {
 	const float arghalf = 0.5f*arg;
 
@@ -15,7 +15,7 @@ float Ougi::sqrt(float arg)
 	return arg*u.x*(1.5f - arghalf*u.x*u.x);// Newton step, repeating increases accuracy
 }
 
-float Ougi::invsqrt(float arg)
+float Ougi::invsqrt(const float arg)
 {
 	long i;
 	float x2, y;
@@ -29,4 +29,14 @@ float Ougi::invsqrt(float arg)
 	y = y * (threehalfs - (x2 * y * y));   // repeat for more accuracy
 
 	return y;
+}
+
+int Ougi::abs(const int arg)
+{
+	return arg > 0 ? arg : -arg;
+}
+
+float Ougi::abs(const float arg)
+{
+	return arg > 0.0f ? arg : -arg;
 }

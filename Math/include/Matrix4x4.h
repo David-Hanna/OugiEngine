@@ -1,43 +1,56 @@
-#pragma once
-
+#ifndef OUGI_MATRIX4X4_H
+#define OUGI_MATRIX4X4_H
 //--------------------------------------------------------------------------------
 // Matrix4x4.h
 //--------------------------------------------------------------------------------
 
-#include "Vector4.h"
+#include "../include/Functions.h"
+#include "../include/Vector4.h"
 
-namespace HM
+namespace Ougi
 {
 	class Matrix4x4
 	{
 	public:
-		Vector4 a, b, c, d;
+		float matrix[4][4];
 
 	public:
-		Matrix4x4()														: a(), b(), c(), d()   {}
-		Matrix4x4(const Vector4 _a, const Vector4 _b, const Vector4 _c, const Vector4 _d) : a(_a), b(_b), c(_c), d(_d) {}
+		Matrix4x4();
+		Matrix4x4(const float _00, const float _01, const float _02, const float _03,
+				  const float _10, const float _11, const float _12, const float _13,
+				  const float _20, const float _21, const float _22, const float _23,
+				  const float _30, const float _31, const float _32, const float _33);
+		Matrix4x4(const float _matrix[4][4]);
+		Matrix4x4(const Matrix4x4& other);
+		
+		Matrix4x4& operator=(const Matrix4x4& other);
 
-		Matrix4x4 operator-() const										{ return Matrix4x4(-a, -b, -c, -d); }
+		float*       operator[](const unsigned int index)       { return matrix[index]; }
+		float const* operator[](const unsigned int index) const { return matrix[index]; }
 
-		Matrix4x4 operator+(const Matrix4x4& addend) const				{ return Matrix4x4(a + addend.a, b + addend.b, c + addend.c, d + addend.d); }
-		Matrix4x4 operator-(const Matrix4x4& subtrahend) const			{ return Matrix4x4(a - subtrahend.a, b - subtrahend.b, c - subtrahend.c, d - subtrahend.d); }
-		Matrix4x4 operator*(const float multiplier)	const				{ return Matrix4x4(a * multiplier, b * multiplier, c * multiplier, d * multiplier); }
-		Vector4   operator*(const Vector4& multiplier);
-		Matrix4x4 operator*(const Matrix4x4& multiplier);
-		Matrix4x4 operator/(const float divisor) const					{ return Matrix4x4(a / divisor, b / divisor, c / divisor, d / divisor); }
+		Matrix4x4 operator-() const;
 
-		Matrix4x4 operator+=(const Matrix4x4& addend)					{ a += addend.a; b += addend.b; c += addend.c; d += addend.d; return *this; }
-		Matrix4x4 operator-=(const Matrix4x4& subtrahend)				{ a -= subtrahend.a; b -= subtrahend.b; c -= subtrahend.c; d -= subtrahend.d; return *this; }
-		Matrix4x4 operator*=(const float multiplier)					{ a *= multiplier; b *= multiplier; c *= multiplier; d *= multiplier; return *this; }
+		Matrix4x4 operator+(const Matrix4x4& addend) const;
+		Matrix4x4 operator-(const Matrix4x4& subtrahend) const;
+		Matrix4x4 operator*(const float multiplier)	const;
+		Vector4   operator*(const Vector4& multiplier) const;
+		Matrix4x4 operator*(const Matrix4x4& multiplier) const;
+		Matrix4x4 operator/(const float divisor) const;
+
+		Matrix4x4 operator+=(const Matrix4x4& addend);
+		Matrix4x4 operator-=(const Matrix4x4& subtrahend);
+		Matrix4x4 operator*=(const float multiplier);
 		Matrix4x4 operator*=(const Matrix4x4& multiplier);
-		Matrix4x4 operator/=(const float divisor)						{ a /= divisor; b /= divisor; c /= divisor; d /= divisor; return *this; }
+		Matrix4x4 operator/=(const float divisor);
 
-		bool operator==(const Matrix4x4& rhs) const						{ return (a == rhs.a) && (b == rhs.b) && (c == rhs.c) && (d == rhs.d); }
-		bool equals(const Matrix4x4& rhs, const float tolerance)		{ return (a.equals(rhs.a, tolerance)) && (b.equals(rhs.b, tolerance)) && (c.equals(rhs.c, tolerance)) && (d.equals(rhs.d, tolerance)); }
+		bool operator==(const Matrix4x4& rhs) const;
+		bool equals(const Matrix4x4& rhs, const float tolerance) const;
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const Ougi::Matrix4x4& mat)
+inline std::ostream& operator<<(std::ostream& out, const Ougi::Matrix4x4& matrix)
 {
-	return out << "[" << mat.a << ", " << mat.b << ", " << mat.c << ", " << mat.d << "]";
+	return out << "[(" << matrix[0][0] << ", " << matrix[0][1] << ", " << matrix[0][2] << ", " << matrix[0][3] << "), (" << matrix[1][0] << ", " << matrix[1][1] << ", " << matrix[1][2] << ", " << matrix[1][3] << "), (" << matrix[2][0] << ", " << matrix[2][1] << ", " << matrix[2][2] << ", " << matrix[2][3] << "), (" << matrix[3][0] << ", " << matrix[3][1] << ", " << matrix[3][2] << ", " << matrix[3][3] << ")]";
 }
+
+#endif
