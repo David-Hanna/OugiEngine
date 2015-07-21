@@ -7,13 +7,14 @@
 #include <ostream>
 
 #include "Functions.h"
+#include "../../OugiSTD/include/Comparable.h"
 
 namespace Ougi
 {
-	class Vector2
+	class Vector2 : public Comparable<Vector2>
 	{
 	public:
-		float x, y;
+		float x, y, __pad_z, __pad_w;
 
 	public:
 		Vector2()													: x(0.0f), y(0.0f) {}
@@ -32,8 +33,11 @@ namespace Ougi
 		Vector2 operator*=(const float multiplier)					{ x *= multiplier; y *= multiplier; return *this; }
 		Vector2 operator/=(const float divisor)						{ x /= divisor; y /= divisor; return *this; }
 
-		bool operator==(const Vector2& rhs) const					{ return (x == rhs.x) && (y == rhs.y); }
-		bool equals(const Vector2& rhs, const float tolerance = 0.0f) const;
+		float operator==(const Vector2& rhs) const					{ return Equals(rhs, 0.0f) ? 0.0f : -1.0f; }
+		float Equals(const Vector2& rhs) const 						{ return Equals(rhs, 0.0f) ? 0.0f : -1.0f; }
+		bool Equals(const Vector2& rhs, const float tolerance) const;
+		bool MagnitudeEquals(const Vector2& rhs, const float tolerance = 0.0f) const;
+		bool DirectionEquals(const Vector2& rhs, const float tolerance = 0.0f) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y); }
 		float Length() const										{ return Ougi::sqrt(LengthSquared()); }

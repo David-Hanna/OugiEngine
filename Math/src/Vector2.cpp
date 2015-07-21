@@ -1,16 +1,18 @@
 #include "../include/Vector2.h"
 
-bool Ougi::Vector2::equals(const Ougi::Vector2& rhs, const float tolerance) const
+bool Ougi::Vector2::Equals(const Ougi::Vector2& rhs, const float tolerance) const
 {
-	float diff = Ougi::abs(x - rhs.x);
-	if (diff > tolerance)
-		return false;
+	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance);
+}
 
-	diff = Ougi::abs(y - rhs.y);
-	if (diff > tolerance)
-		return false;
+bool Ougi::Vector2::MagnitudeEquals(const Ougi::Vector2& rhs, const float tolerance) const
+{
+	return Ougi::abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+}
 
-	return true;
+bool Ougi::Vector2::DirectionEquals(const Ougi::Vector2& rhs, const float tolerance) const
+{
+	
 }
 
 Ougi::Vector2 Ougi::Vector2::Normalize()

@@ -1,20 +1,18 @@
 #include "../include/Vector3.h"
 
-bool Ougi::Vector3::equals(const Ougi::Vector3& rhs, const float tolerance) const
+bool Ougi::Vector3::Equals(const Ougi::Vector3& rhs, const float tolerance) const
 {
-	float diff = Ougi::abs(x - rhs.x);
-	if (diff > tolerance)
-		return false;
+	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance)
+}
 
-	diff = Ougi::abs(y - rhs.y);
-	if (diff > tolerance)
-		return false;
+bool Ougi::Vector3::MagnitudeEquals(const Ougi::Vector3& rhs, const float tolerance) const
+{
+	return Ougi::abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+}
 
-	diff = Ougi::abs(z - rhs.z);
-	if (diff > tolerance)
-		return false;
-
-	return true;
+bool Ougi::Vector3::DirectionEquals(const Ougi::Vector3& rhs, const float tolerance) const
+{
+	
 }
 
 Ougi::Vector3 Ougi::Vector3::Normalize()

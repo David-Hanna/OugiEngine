@@ -1,24 +1,18 @@
 #include "../include/Vector4.h"
 
-bool Ougi::Vector4::equals(const Ougi::Vector4& rhs, const float tolerance) const
+bool Ougi::Vector4::Equals(const Ougi::Vector4& rhs, const float tolerance) const
 {
-	float diff = Ougi::abs(x - rhs.x);
-	if (diff > tolerance)
-		return false;
+	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance);
+}
 
-	diff = Ougi::abs(y - rhs.y);
-	if (diff > tolerance)
-		return false;
+bool Ougi::Vector4::MagnitudeEquals(const Ougi::Vector4& rhs, const float tolerance) const
+{
+	return Ougi::abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+}
 
-	diff = Ougi::abs(z - rhs.z);
-	if (diff > tolerance)
-		return false;
-
-	diff = Ougi::abs(w - rhs.w);
-	if (diff > tolerance)
-		return false;
-
-	return true;
+bool Ougi::Vector4::DirectionEquals(const Ougi::Vector4& rhs, const float tolerance) const
+{
+	
 }
 
 Ougi::Vector4 Ougi::Vector4::Normalize()

@@ -42,8 +42,8 @@ namespace Ougi
 		Matrix3x3 operator*=(const Matrix3x3& multiplier);
 		Matrix3x3 operator/=(const float divisor);
 
-		bool operator==(const Matrix3x3& rhs) const;
-		bool equals(const Matrix3x3& rhs, const float tolerance) const;
+		float operator==(const Matrix3x3& rhs) const;
+		float equals(const Matrix3x3& rhs, const float tolerance = 0.0f) const;
 	};
 }
 

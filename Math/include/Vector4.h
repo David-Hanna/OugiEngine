@@ -7,10 +7,11 @@
 #include <ostream>
 
 #include "Functions.h"
+#include "../../OugiSTD/include/Comparable.h"
 
 namespace Ougi
 {
-	class Vector4
+	class Vector4 : public Comparable<Vector4>
 	{
 	public:
 		float x, y, z, w;
@@ -32,8 +33,11 @@ namespace Ougi
 		Vector4 operator*=(const float multiplier)					{ x *= multiplier; y *= multiplier; z *= multiplier; w *= multiplier; return *this; }
 		Vector4 operator/=(const float divisor)						{ x /= divisor; y /= divisor; z /= divisor; w /= divisor; return *this; }
 
-		bool operator==(const Vector4& rhs) const					{ return (x == rhs.x) && (y == rhs.y) && (z == rhs.z) && (w == rhs.w); }
-		bool equals(const Vector4& rhs, const float tolerance = 0.0f) const;
+		float operator==(const Vector4& rhs) const					{ return Equals(rhs, 0.0f) ? 0.0f : -1.0f; }
+		float Equals(const Vector4& rhs) const						{ return Equals(rhs, 0.0f) ? 0.0f : -1.0f; }
+		bool Equals(const Vector4& rhs, const float tolerance) const;
+		bool MagnitudeEquals(const Vector4& rhs, const float tolerance = 0.0f) const;
+		bool DirectionEquals(const Vector4& rhs, const float tolerance = 0.0f) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z) + (w * w); }
 		float Length() const										{ return Ougi::sqrt(LengthSquared()); }
