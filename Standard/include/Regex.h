@@ -1,5 +1,5 @@
-#ifndef OUGI_REGEX_H
-#define OUGI_REGEX_H
+#ifndef OUGI_STANDARD_REGEX_H
+#define OUGI_STANDARD_REGEX_H
 
 //-------------------------------------------------------------------------------------------
 // Regex

@@ -1,5 +1,5 @@
-#ifndef OUGI_MATRIX2X2_H
-#define OUGI_MATRIX2X2_H
+#ifndef OUGI_MATH_MATRIX2X2_H
+#define OUGI_MATH_MATRIX2X2_H
 //--------------------------------------------------------------------------------
 // Matrix2x2.h
 //--------------------------------------------------------------------------------
@@ -11,9 +11,6 @@ namespace Ougi
 {
 	class Matrix2x2
 	{
-	private:
-		float matrix[2][2];
-
 	public:
 		Matrix2x2();
 		Matrix2x2(const float _00, const float _01, 
@@ -43,6 +40,8 @@ namespace Ougi
 
 		float operator==(const Matrix2x2& rhs) const;
 		float equals(const Matrix2x2& rhs, const float tolerance = 0.0f) const;
+	protected:
+		float matrix[2][2];
 	};
 }
 

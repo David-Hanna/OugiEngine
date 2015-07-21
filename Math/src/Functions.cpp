@@ -40,3 +40,82 @@ float Ougi::abs(const float arg)
 {
 	return arg > 0.0f ? arg : -arg;
 }
+
+float sin(const float rads)
+{
+	
+}
+
+float cos(const float rads)
+{
+	
+}
+
+float tan(const float rads)
+{
+	
+}
+
+float arcsin(const float rads)
+{
+	
+}
+
+float arccos(const float rads)
+{
+	
+}
+
+float arctan(const float rads)
+{
+	
+}
+
+float exp(int base, int power)
+{
+	int result = 1;
+	
+	while (power)
+	{
+		if (power & 1)
+		{
+			result *= base;
+		}
+		power >>= 1;
+		base *= base;
+	}
+	
+	return result;
+}
+
+float exp(float base, int power)
+{
+	float result = 1.0f;
+	
+	while (power)
+	{
+		if (power & 1)
+		{
+			result *= base;
+		}
+		power >>= 1;
+		base *= base;
+	}
+	
+	return result;
+}
+
+float log(const float base, const float arg)
+{
+	
+}
+
+float factorial(const unsigned int arg)
+{
+	unsigned int result = 1;
+	for (unsigned int i = 0; i < arg; ++i)
+	{
+		result *= i + 1;
+	}
+	return result;
+}

@@ -1,5 +1,5 @@
-#ifndef OUGI_STRING_H
-#define OUGI_STRING_H
+#ifndef OUGI_STANDARD_STRING_H
+#define OUGI_STANDARD_STRING_H
 
 //-------------------------------------------------------------------------------------------
 // String
@@ -80,7 +80,7 @@ namespace Ougi
 		int operator==(const char* cstring);
 		int operator==(const String& string);
 	
-	private:
+	protected:
 		char* string;
 		unsigned int length;
 		

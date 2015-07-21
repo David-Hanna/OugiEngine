@@ -1,5 +1,5 @@
-#ifndef OUGI_VECTOR2_H
-#define OUGI_VECTOR2_H
+#ifndef OUGI_MATH_VECTOR2_H
+#define OUGI_MATH_VECTOR2_H
 //--------------------------------------------------------------------------------
 // Vector2.h
 //--------------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 
 namespace Ougi
 {
-	class Vector2 : public Comparable<Vector2>
+	class Vector2
 	{
 	public:
 		float x, y, __pad_z, __pad_w;

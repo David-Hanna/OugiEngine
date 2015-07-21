@@ -1,5 +1,5 @@
-#ifndef OUGI_MATRIX3X3_H
-#define OUGI_MATRIX3X3_H
+#ifndef OUGI_MATH_MATRIX3X3_H
+#define OUGI_MATH_MATRIX3X3_H
 //--------------------------------------------------------------------------------
 // Matrix3x3.h
 //--------------------------------------------------------------------------------
@@ -11,9 +11,6 @@ namespace Ougi
 {
 	class Matrix3x3
 	{
-	public:
-		float matrix[3][3];
-
 	public:
 		Matrix3x3();
 		Matrix3x3(const float _00, const float _01, const float _02,
@@ -44,6 +41,8 @@ namespace Ougi
 
 		float operator==(const Matrix3x3& rhs) const;
 		float equals(const Matrix3x3& rhs, const float tolerance = 0.0f) const;
+	protected:
+		float matrix[3][3];
 	};
 }
 

@@ -1,18 +1,18 @@
-#ifndef OUGI_COMPARABLE_H
-#define OUGI_COMPARABLE_H
+#ifndef OUGI_COLLECTIONS_LIST_H
+#define OUGI_COLLECTIONS_LIST_H
 
 //-------------------------------------------------------------------------------------------
-// Comparable
+// Linked List
 //-------------------------------------------------------------------------------------------
 
 namespace Ougi
 {
 	template<typename T>
-	class Comparable
+	class List
 	{
-		float operator==(const T& rhs) const = 0;
-		float Equals(const T& rhs) const = 0;
-	}
+	public:
+	protected:
+	};
 }
 
 #endif

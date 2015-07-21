@@ -1,5 +1,5 @@
-#ifndef OUGI_MATRIX4X4_H
-#define OUGI_MATRIX4X4_H
+#ifndef OUGI_MATH_MATRIX4X4_H
+#define OUGI_MATH_MATRIX4X4_H
 //--------------------------------------------------------------------------------
 // Matrix4x4.h
 //--------------------------------------------------------------------------------
@@ -11,9 +11,6 @@ namespace Ougi
 {
 	class Matrix4x4
 	{
-	public:
-		float matrix[4][4];
-
 	public:
 		Matrix4x4();
 		Matrix4x4(const float _00, const float _01, const float _02, const float _03,
@@ -45,6 +42,9 @@ namespace Ougi
 
 		float operator==(const Matrix4x4& rhs) const;
 		float equals(const Matrix4x4& rhs, const float tolerance = 0.0f) const;
+		 
+	protected:
+		float matrix[4][4];
 	};
 }
 
