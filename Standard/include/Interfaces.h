@@ -5,18 +5,27 @@
 // Interfaces
 //-------------------------------------------------------------------------------------------
 
-#include "Iterator.h"
-
 namespace Ougi
 {
 	template<typename T>
-	class Sortable
+	class Comparable
 	{
-		bool operator==(const T& rhs) const = 0;
-		bool operator<(const T& rhs) const = 0;
-		bool operator>(const T& rhs) const = 0;
-		bool operator<=(const T& rhs) const = 0;
-		bool operator>=(const T& rhs) const = 0;
+		virtual bool operator==(const T& rhs) const = 0;
+		bool operator!=(const T& rhs) const { return !operator==(rhs); }
+		virtual bool operator<(const T& rhs) const = 0;
+		bool operator>(const T& rhs) const { return rhs < (*this); }
+		bool operator<=(const T& rhs) const { return !operator>(rhs); }
+		bool operator>=(const T& rhs) const { return !operator<(rhs); }
+	}
+	
+	template<typename T>
+	class Iterator
+	{
+	public:
+		bool HasNext() const = 0;
+		T& Next() = 0;
+		const T& Next() const = 0;
+		void Remove() = 0;
 	}
 	
 	template<typename T>
