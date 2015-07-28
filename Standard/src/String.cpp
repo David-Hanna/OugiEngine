@@ -83,7 +83,12 @@ Ougi::String Ougi::String::Clone() const
 	return String(*this);
 }
 
-char* Ougi::String::CString() const 
+char* Ougi::String::CString()
+{
+	return data;
+}
+
+const char* Ougi::String::CString() const 
 {
 	return data;
 }
@@ -114,18 +119,66 @@ void Ougi::String::Clear()
 	InitToEmpty();
 }
 
-char Ougi::String::operator[](const unsigned int index);
-const char Ougi::String::operator[](const unsigned int index) const;
-char Ougi::String::At(const unsigned int index);
-const char Ougi::String::At(const unsigned int index) const;
-char Ougi::String::Back();
-const char Ougi::String::Back() const;
-char Ougi::String::Front();
-const char Ougi::String::Front() const;
+char Ougi::String::operator[](const unsigned int index)
+{
+	return CharAt(index);
+}
 
-bool Ougi::String::Contains(const char c) const;
-bool Ougi::String::Contains(const char cstring[]) const;
-bool Ougi::String::Contains(const String& other) const;
+const char Ougi::String::operator[](const unsigned int index) const
+{
+	return CharAt(index);
+}
+
+char Ougi::String::CharAt(const unsigned int index)
+{
+	if (index >= length) return 0;
+	return data[index];
+}
+
+const char Ougi::String::CharAt(const unsigned int index) const
+{
+	if (index >= length) return 0;
+	return data[index];
+}
+
+char Ougi::String::Back()
+{
+	return data[length - 1];
+}
+
+const char Ougi::String::Back() const
+{
+	return data[length - 1];
+}
+
+char Ougi::String::Front()
+{
+	return data[0];
+}
+
+const char Ougi::String::Front() const
+{
+	return data[0];
+}
+
+bool Ougi::String::Contains(const char c) const
+{
+	for (unsigned int = 0; i < length; ++i)
+	{
+		if (data[i]) == c) return true;
+	}
+	return false;
+}
+
+bool Ougi::String::Contains(const char cstring[]) const
+{
+	// TODO
+}
+
+bool Ougi::String::Contains(const String& other) const
+{
+	return Contains(other.CString());
+}
 
 Ougi::String Ougi::String::Substring(const unsigned int start, const unsigned int end = length) const;
 

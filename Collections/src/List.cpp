@@ -22,7 +22,6 @@ Ougi::List& Ougi::List::operator=(const List& rhs)
 	if (this != &rhs)
 	{
 		Clear();
-		
 	}
 	return *this;
 }

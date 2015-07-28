@@ -22,7 +22,9 @@ namespace Ougi
 		String& operator=(const String& rhs);
 		
 		String Clone() const;
-		char*  CString() const;
+		
+		char*       CString();
+		const char* CString() const;
 		
 		static unsigned int Length(const char cstring[]);
 		unsigned unsigned int Length() const;
@@ -31,8 +33,8 @@ namespace Ougi
 		
 		char       operator[](const unsigned int index);
 		const char operator[](const unsigned int index) const;
-		char       At(const unsigned int index);
-		const char At(const unsigned int index) const;
+		char       CharAt(const unsigned int index);
+		const char CharAt(const unsigned int index) const;
 		char       Back();
 		const char Back() const;
 		char       Front();
