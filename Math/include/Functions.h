@@ -22,7 +22,9 @@ namespace Ougi
 	float arctan(const float rads);
 	
 	float exp(int base, int power);
+	float exp(int base, float power);
 	float exp(float base, int power);
+	float exp(float base, float power);
 	
 	float log(const float base, const float arg);
 	float factorial(const unsigned int arg);

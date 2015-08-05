@@ -7,7 +7,7 @@
 #include <ostream>
 
 #include "Functions.h"
-#include "../../OugiSTD/include/Comparable.h"
+#include "../../Standard/include/Comparable.h"
 
 namespace Ougi
 {

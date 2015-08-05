@@ -5,6 +5,8 @@
 // String
 //-------------------------------------------------------------------------------------------
 
+#include "Interfaces.h"
+
 namespace Ougi
 {
 	class String : Comparable<String>
