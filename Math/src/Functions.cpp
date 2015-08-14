@@ -1,6 +1,6 @@
 #include "../include/Functions.h"
 
-float Ougi::sqrt(const float arg)
+float Ougi::sqrt(float arg)
 {
 	const float arghalf = 0.5f*arg;
 
@@ -15,7 +15,7 @@ float Ougi::sqrt(const float arg)
 	return arg*u.x*(1.5f - arghalf*u.x*u.x);// Newton step, repeating increases accuracy
 }
 
-float Ougi::invsqrt(const float arg)
+float Ougi::invsqrt(float arg)
 {
 	long i;
 	float x2, y;
@@ -31,42 +31,42 @@ float Ougi::invsqrt(const float arg)
 	return y;
 }
 
-int Ougi::abs(const int arg)
+int Ougi::abs(int arg)
 {
 	return arg > 0 ? arg : -arg;
 }
 
-float Ougi::abs(const float arg)
+float Ougi::abs(float arg)
 {
 	return arg > 0.0f ? arg : -arg;
 }
 
-float sin(const float rads)
+float sin(float rads)
 {
 	
 }
 
-float cos(const float rads)
+float cos(float rads)
 {
 	
 }
 
-float tan(const float rads)
+float tan(float rads)
 {
 	
 }
 
-float arcsin(const float rads)
+float arcsin(float rads)
 {
 	
 }
 
-float arccos(const float rads)
+float arccos(float rads)
 {
 	
 }
 
-float arctan(const float rads)
+float arctan(float rads)
 {
 	
 }
@@ -88,6 +88,11 @@ float exp(int base, int power)
 	return result;
 }
 
+float exp(int base, float power);
+{
+	
+}
+
 float exp(float base, int power)
 {
 	float result = 1.0f;
@@ -105,12 +110,17 @@ float exp(float base, int power)
 	return result;
 }
 
-float log(const float base, const float arg)
+float exp(float base, float power)
 {
 	
 }
 
-float factorial(const unsigned int arg)
+float log(float base, float arg)
+{
+	
+}
+
+float factorial(unsigned int arg)
 {
 	unsigned int result = 1;
 	for (unsigned int i = 0; i < arg; ++i)

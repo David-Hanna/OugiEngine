@@ -52,11 +52,11 @@ namespace Ougi
 		String& operator+=(const char addend[]);
 		String& operator+=(const String& addend);
 		
-		String& Insert(const unsigned int index, const char c);
-		String& Insert(const unsigned int index, const char cstring[]);
-		String& Insert(const unsigned int index, const String& other);
+		String Insert(const unsigned int index, const char c) const;
+		String Insert(const unsigned int index, const char cstring[]) const;
+		String Insert(const unsigned int index, const String& other) const;
 		
-		String& Erase(const unsigned int index, const unsigned int count);
+		String Erase(const unsigned int index, const unsigned int count) const;
 		
 		bool Match(const char regex[]) const;
 		bool Match(const String& regex) const;
@@ -88,8 +88,8 @@ namespace Ougi
 		bool operator>=(const char cstring[]) const;
 	
 	protected:
-		unsigned int ownLength;
 		char* data;
+		unsigned int ownLength;
 		
 		void InitToEmpty();
 		void InitFromChar(const char c);
@@ -97,6 +97,7 @@ namespace Ougi
 		void InitFromOther(const String& other);
 		
 		bool ContainsWithLength(const char cstring[], const unsigned int length) const;
+		String& addWithLength(const char addend[], const unsigned int length);
 	};
 }
 

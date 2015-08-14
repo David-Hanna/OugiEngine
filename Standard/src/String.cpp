@@ -22,24 +22,24 @@ Ougi::String::String(const String& other)
 
 void Ougi::String::InitToEmpty()
 {
-	ownLength = 0;
 	data = new char[1];
 	data[0] = 0;
+	ownLength = 0;
 }
 
 void Ougi::String::InitFromChar(const char c)
 {
-	ownLength = 1;
 	data = new char[2];
 	data[0] = c;
 	data[1] = 0;
+	ownLength = 1;
 }
 
 void Ougi::String::InitFromCString(const char cstring[])
 {
 	ownLength = String.Length(cstring);
-	data = new char[length + 1];
-	for (unsigned int i = 0; i < length; i++)
+	data = new char[ownLength + 1];
+	for (unsigned int i = 0; i < ownLength; i++)
 	{
 		data[i] = cstring[i];
 	}
@@ -132,14 +132,10 @@ char Ougi::String::CharAt(const unsigned int index) const
 
 Ougi::String Ougi::String::Substring(const unsigned int start, const unsigned int end) const
 {
-	const unsigned int length = end - start;
-	char* csubstring = new char[length];
-	for (unsigned int i = 0; i < length; ++i)
-	{
-		csubstring[i] = data[i + start];
-	}
-	String substring(csubstring);
-	delete[] csubstring;
+	const char temp = data[end];
+	data[end] = 0;
+	String substring(data + start);
+	data[end] = temp;
 	return substring;
 }
 
@@ -179,9 +175,12 @@ bool Ougi::String::Contains(const char cstring[]) const
 {
 	for (unsigned int i = 0; i < ownLength; ++i)
 	{
-		if (Substring(i, ownLength).StartsWith(cstring))
+		if (CharAt(i) == cstring[0])
 		{
-			return true;
+			if (Substring(i, ownLength).StartsWith(cstring))
+			{
+				return true;
+			}
 		}
 	}
 	return false;
@@ -194,54 +193,91 @@ bool Ougi::String::Contains(const String& other) const
 
 Ougi::String Ougi::String::operator+(const char addend) const
 {
-	char* cresult = new char[ownLength + 2];
-	for (unsigned int i = 0; i < ownLength; ++i)
-	{
-		cresult[i] = data[i];
-	}
-	cresult[ownLength] = addend;
-	cresult[ownLength + 1] = 0;
-	String result(cresult);
-	delete[] cresult;
-	return result;
+	return String(*this) += addend;
 }
 
 Ougi::String Ougi::String::operator+(const char addend[]) const
 {
-	const unsigned int addendLength = String.Length(addend);
-	char* cresult = new char[ownLength + addendLength + 1];
-	for (unsigned int i = 0; i < ownLength; ++i)
-	{
-		cresult[i] = data[i];
-	}
-	for (unsigned int i = 0; i < addendLength; ++i)
-	{
-		cresult[i + ownLength] = addend[i];
-	}
-	cresult[ownLength + addendLength] = 0;
-	String result(cresult);
-	delete[] cresult;
-	return result;
+	return String(*this) += addend;
 }
 
 Ougi::String Ougi::String::operator+(const String& addend) const
 {
-	return (*this) + addend.CString();
+	return String(*this) += addend;
 }
 
 Ougi::String& Ougi::String::operator+=(const char addend)
 {
+	char* newData = new char[ownLength + 2];
+	for (unsigned int i = 0; i < ownLength; ++i)
+	{
+		newData[i] = data[i];
+	}
+	newData[ownLength] = addend;
+	newData[ownLength + 1] = 0;
+	delete[] data;
+	data = newData;
+	++ownLength;
+	return (*this);
+}
+
+Ougi::String& Ougi::String::operator+=(const char addend[])
+{
+	return addWithLength(addend, String.Length(addend));
+}
+
+Ougi::String& Ougi::String::operator+=(const String& addend)
+{
+	return addWithLength(addend, addend.Length());
+}
+
+Ougi::String& Ougi::String::addWithLength(const char addend[], const unsigned int otherLength)
+{
+	char* newData = new char[ownLength + otherLength + 1];
+	for (unsigned int i = 0; i < ownLength; ++i)
+	{
+		newData[i] = data[i];
+	}
+	for (unsigned int i = 0; i < otherLength; ++i)
+	{
+		newData[ownLength + i] = addend[i];
+	}
+	newData[ownLength + otherLength] = 0;
+	delete[] data;
+	data = newData;
+	ownLength += otherLength;
+	return (*this);
+}
+
+Ougi::String Ougi::String::Insert(const unsigned int index, const char c) const
+{
+	char* newData = new char[ownLength + 2];
+	for (unsigned int i = 0; i < index; ++i)
+	{
+		newData[i] = data[i];
+	}
+	newData[index] = c;
+	for (unsigned int i = index + 1; i < ownLength + 1; ++i)
+	{
+		newData[i] = data[i - 1];
+	}
+	newData[ownLength + 1] = 0;
+	String newString(newData);
+	delete[] newData;
+	return newString;
+}
+
+Ougi::String Ougi::String::Insert(const unsigned int index, const char cstring[]) const
+{
 	
 }
 
-Ougi::String& Ougi::String::operator+=(const char addend[]);
-Ougi::String& Ougi::String::operator+=(const String& addend);
+Ougi::String Ougi::String::Insert(const unsigned int index, const String& other) const
+{
+	
+}
 
-Ougi::String& Ougi::String::Insert(const unsigned int index, const char c);
-Ougi::String& Ougi::String::Insert(const unsigned int index, const char cstring[]);
-Ougi::String& Ougi::String::Insert(const unsigned int index, const String& other);
-
-Ougi::String& Ougi::String::Erase(const unsigned int index, const unsigned int count);
+Ougi::String Ougi::String::Erase(const unsigned int index, const unsigned int count) const;
 
 bool Ougi::String::Match(const char regex[]) const;
 bool Ougi::String::Match(const String& regex) const;
