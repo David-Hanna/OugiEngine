@@ -4,6 +4,10 @@
 // Matrix2x2.h
 //--------------------------------------------------------------------------------
 
+#ifdef DEBUG
+#include <ostream>
+#endif
+
 #include "../include/Functions.h"
 #include "../include/Vector2.h"
 
@@ -45,9 +49,11 @@ namespace Ougi
 	};
 }
 
+#ifdef DEBUG
 inline std::ostream& operator<<(std::ostream& out, const Ougi::Matrix2x2& matrix)
 {
 	return out << "[(" << matrix[0][0] << ", " << matrix[0][1] << "), (" << matrix[1][0] << ", " << matrix[1][1] << ")]";
 }
+#endif
 
 #endif

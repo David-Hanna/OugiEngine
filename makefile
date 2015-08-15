@@ -5,6 +5,10 @@
 # 'make clean'  removes all .o and executable files
 #
 
+# searches these directories for cpp files when a source file is missing
+vpath %.cpp ./Standard/src
+#./Math/src ./Physics/src ./Collection/src
+
 # define the C compiler to use
 CC = g++
 
@@ -12,11 +16,12 @@ CC = g++
 CFLAGS = -std=c++11 -Wall -g
 
 # define any directories containing header files other than /usr/include
-#
-INCLUDES = -I/../include
+INCLUDES =
+#/Math/include /Physics/include /Collections/include /Standard/include
 
 # define the cpp source files
-SRCS = main.cpp Functions.cpp Vector2.cpp Vector3.cpp Vector4.cpp Matrix2x2.cpp Matrix3x3.cpp Matrix4x4.cpp
+SRCS = main.cpp String.cpp 
+#Functions.cpp Vector2.cpp Vector3.cpp Vector4.cpp Matrix2x2.cpp Matrix3x3.cpp Matrix4x4.cpp
 
 # define the cpp object files 
 #

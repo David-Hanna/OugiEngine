@@ -1,15 +1,27 @@
+
+#define DEBUG
+//#define MATH
+#define STANDARD
+
+#ifdef MATH
+#include "Math/include/Functions.h"
+#include "Math/include/Vector2.h"
+#include "Math/include/Vector3.h"
+#include "Math/include/Vector4.h"
+#include "Math/include/Matrix2x2.h"
+#include "Math/include/Matrix3x3.h"
+#include "Math/include/Matrix4x4.h"
+#endif
+
+#ifdef STANDARD
+#include "Standard/include/String.h"
+#endif
+
 #include <iostream>
 
-#include "../include/Functions.h"
-#include "../include/Vector2.h"
-#include "../include/Vector3.h"
-#include "../include/Vector4.h"
-#include "../include/Matrix2x2.h"
-#include "../include/Matrix3x3.h"
-#include "../include/Matrix4x4.h"
-
-int main(int argc, char* argv[])
+void math()
 {
+#ifdef MATH
 	//=======================
 	// Functions
 	//=======================
@@ -145,4 +157,82 @@ int main(int argc, char* argv[])
 	std::cout << std::endl;
 	std::cout << Ougi::Matrix4x4(24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f, 30.0f, 31.0f, 32.0f, 33.0f, 34.0f, 35.0f, 36.0f, 37.0f, 38.0f, 39.0f) << std::endl;
 	std::cout << std::endl;
+#endif
+}
+
+void standard()
+{
+	//=======================
+	// String
+	//=======================
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << "-                  String                 -" << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << std::endl;
+	
+	std::cout << "-------------------------------------------" << std::endl;
+	Ougi::String empty;
+	std::cout << "Empty: " << empty << std::endl;
+	std::cout << "empty has any?: " << empty.Any() << std::endl;
+	std::cout << "Is empty empty?: " << empty.Empty() << std::endl;
+	std::cout << "Empty's length: " << empty.Length() << std::endl;
+	std::cout << "Empty at char 0: " << empty[0] << std::endl;
+	std::cout << "empty starts with c? " << empty.StartsWith('c') << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	Ougi::String z('z');
+	std::cout << "z: " << z << std::endl;
+	std::cout << "z has any?: " << z.Any() << std::endl;
+	std::cout << "Is z empty?: " << z.Empty() << std::endl;
+	std::cout << "z's length: " << z.Length() << std::endl;
+	std::cout << "z at char 0: " << z[0] << std::endl;
+	std::cout << "z starts with z?: " << z.StartsWith('z') << std::endl;
+	std::cout << "z contains z?: " << z.Contains('z') << std::endl;
+	std::cout << "z insert a at 0: " << z.Insert('a', 0) << std::endl;
+	std::cout << "z insert a at 1: " << z.Insert('a', 1) << std::endl;
+	std::cout << "z equals z?: " << (z == 'z') << std::endl;
+	std::cout << "z equals a?: " << (z == 'a') << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	Ougi::String hello("hello");
+	std::cout << "hello: " << hello << std::endl;
+	std::cout << "hello has any?: " << hello.Any() << std::endl;
+	std::cout << "Is hello empty?: " << hello.Empty() << std::endl;
+	std::cout << "hello's length: " << hello.Length() << std::endl;
+	std::cout << "hello at char 2: " << hello[2] << std::endl;
+	std::cout << "substring of hello at 1: " << hello.Substring(1) << std::endl;
+	std::cout << "hello starts with hell?: " << hello.StartsWith("hell") << std::endl;
+	std::cout << "hello + \' : \' + hello: " << hello + " / " + hello << std::endl;
+	std::cout << "hello contains llo? " << hello.Contains("llo") << std::endl;
+	std::cout << "hello equals hello?: " << (hello == "hello") << std::endl;
+	std::cout << "hello equals magic?: " << (hello == "magic") << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	Ougi::String mystring(Ougi::String("mystring"));
+	std::cout << "mystring: " << mystring << std::endl;
+	std::cout << "mystring has any?: " << mystring.Any() << std::endl;
+	std::cout << "Is mystring empty?: " << mystring.Empty() << std::endl;
+	std::cout << "mystring's length: " << mystring.Length() << std::endl;
+	std::cout << "mystring at char 6: " << mystring[6] << std::endl;
+	std::cout << "substring of mystring from 3 to 6: " << mystring.Substring(3, 6) << std::endl;
+	std::cout << "mystring starts with magic?: " << mystring.StartsWith("magic") << std::endl;
+	std::cout << "mystring contains foo?: " << mystring.Contains("foo") << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	empty = z;
+	std::cout << "empty after assigning z: " << empty << std::endl;
+	empty = hello;
+	std::cout << "empty after assigning hello: " << empty << std::endl;
+	empty = mystring;
+	std::cout << "empty after assigning mystring: " << empty << std::endl;
+	empty.Clear();
+	std::cout << "empty after clearing: " << empty << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	
+	empty.Clear();
+	
+	std::cout << std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+	math();
+	standard();
+	return 0;
 }

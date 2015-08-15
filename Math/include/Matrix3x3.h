@@ -4,6 +4,10 @@
 // Matrix3x3.h
 //--------------------------------------------------------------------------------
 
+#ifdef DEBUG
+#include <ostream>
+#endif
+
 #include "../include/Functions.h"
 #include "../include/Vector3.h"
 
@@ -46,9 +50,11 @@ namespace Ougi
 	};
 }
 
+#ifdef DEBUG
 inline std::ostream& operator<<(std::ostream& out, const Ougi::Matrix3x3& matrix)
 {
 	return out << "[(" << matrix[0][0] << ", " << matrix[0][1] << ", " << matrix[0][2] << "), (" << matrix[1][0] << ", " << matrix[1][1] << ", " << matrix[1][2] << "), (" << matrix[2][0] << ", " << matrix[2][1] << ", " << matrix[2][2] << ")]";
 }
+#endif
 
 #endif

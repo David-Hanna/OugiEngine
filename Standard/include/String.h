@@ -5,6 +5,10 @@
 // String
 //-------------------------------------------------------------------------------------------
 
+#ifdef DEBUG
+#include <ostream>
+#endif
+
 #include "Interfaces.h"
 
 namespace Ougi
@@ -25,16 +29,18 @@ namespace Ougi
 		
 		String Clone() const;
 		
-		const char const* CString() const;
+		const char* CString() const;
 		
 		static unsigned int Length(const char cstring[]);
-		unsigned unsigned int Length() const;
+		unsigned int Length() const;
+		bool Any() const;
 		bool Empty() const;
 		void Clear();
 		
 		char operator[](const unsigned int index) const;
 		char CharAt(const unsigned int index) const;
-		String Substring(const unsigned int start, const unsigned int end = ownLength) const;
+		String Substring(const unsigned int start) const;
+		String Substring(const unsigned int start, const unsigned int end) const;
 		
 		bool StartsWith(const char c) const;
 		bool StartsWith(const char cstring[]) const;
@@ -52,9 +58,9 @@ namespace Ougi
 		String& operator+=(const char addend[]);
 		String& operator+=(const String& addend);
 		
-		String Insert(const unsigned int index, const char c) const;
-		String Insert(const unsigned int index, const char cstring[]) const;
-		String Insert(const unsigned int index, const String& other) const;
+		String Insert(const char c, const unsigned int index) const;
+		String Insert(const char cstring[], const unsigned int index) const;
+		String Insert(const String& other, const unsigned int index) const;
 		
 		String Erase(const unsigned int index, const unsigned int count) const;
 		
@@ -101,9 +107,11 @@ namespace Ougi
 	};
 }
 
+#ifdef DEBUG
 inline std::ostream& operator<<(std::ostream& out, const Ougi::String& string)
 {
 	return out << string.CString();
 }
+#endif
 
 #endif

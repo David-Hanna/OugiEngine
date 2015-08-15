@@ -4,7 +4,9 @@
 // Vector4.h
 //--------------------------------------------------------------------------------
 
+#ifdef DEBUG
 #include <ostream>
+#endif
 
 #include "Functions.h"
 #include "../../Standard/include/Comparable.h"
@@ -49,9 +51,11 @@ namespace Ougi
 	};
 }
 
+#ifdef DEBUG
 inline std::ostream& operator<<(std::ostream& out, const Ougi::Vector4& vec)
 {
 	return out << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
 }
+#endif
 
 #endif
