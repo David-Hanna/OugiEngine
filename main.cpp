@@ -1,7 +1,7 @@
 
 #define DEBUG
-#define MATH
-//#define STANDARD
+//#define MATH
+#define STANDARD
 
 #ifdef MATH
 #include "Math/include/Constants.h"
@@ -24,6 +24,24 @@
 #include <ctime>
 #include <limits>
 
+#ifdef MATH
+void ftestf(const char* name, float input, float val, float expected)
+{
+	std::cout << name << "(" << input << "): " << val << " == " << expected << ", "; 
+	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
+	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
+	std::cout << std::endl;
+}
+
+void fftestf(const char* name, float input1, float input2, float val, float expected)
+{
+	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " == " << expected << ", "; 
+	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
+	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
+	std::cout << std::endl;
+}
+#endif
+
 int TIMES = 10000000;
 std::clock_t start;
 std::clock_t end;
@@ -43,27 +61,86 @@ double duration()
 	return (((end - start) / ((double) CLOCKS_PER_SEC)) * 1000);
 }
 
-void ftestf(const char* name, float input, float val, float expected)
+void fbenchmarkf(const char* name, float (*func)(float), float input)
 {
-	std::cout << name << "(" << input << "): " << val << " == " << expected << ", "; 
-	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
 }
 
-void fftestf(const char* name, float input1, float input2, float val, float expected)
+void dbenchmarkd(const char* name, double (*func)(double), double input)
 {
-	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " == " << expected << ", "; 
-	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void ffbenchmarkf(const char* name, float (*func)(float, float), float input1, float input2)
+{
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void ddbenchmarkd(const char* name, double (*func)(double, double), double input1, double input2)
+{
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void fubenchmarkf(const char* name, float (*func)(float, unsigned int), float input1, unsigned int input2)
+{
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void fibenchmarkf(const char* name, float (*func)(float, int), float input1, int input2)
+{
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void ubenchmarku(const char* name, unsigned int (*func)(unsigned int), unsigned int input)
+{
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	stop();
+	std::cout << name << ": " << duration() << std::endl;
 }
 
 void math()
 {
 #ifdef MATH
-	float fval;
-
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-         Functions - Unit Tests          -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -91,75 +168,17 @@ void math()
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = sqrt(7346.123f);
-	}
-	stop();
-	std::cout << "std::sqrt: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = Ougi::sqrt(7346.123f);
-	}
-	stop();
-	std::cout << "ougi::sqrt: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = sin(0.89f);
-	}
-	stop();
-	std::cout << "std::sin: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = Ougi::sin(0.89f);
-	}
-	stop();
-	std::cout << "ougi::sin: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = pow(342.6745f, 4);
-	}
-	stop();
-	std::cout << "std::pow: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = Ougi::pow(342.6745f, 4u);
-	}
-	stop();
-	std::cout << "ougi::pow(float, unsigned int): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = Ougi::pow(342.6745f, -4);
-	}
-	stop();
-	std::cout << "ougi::pow(float, int): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		fval = Ougi::factorial(8u);
-	}
-	stop();
-	std::cout << "ougi::factorial: " << duration() << std::endl;
+	dbenchmarkd("std::sqrt", sqrt, 7346.123);
+	fbenchmarkf("Ougi::sqrt", Ougi::sqrt, 7346.123f);
+	dbenchmarkd("std::sin", sin, 0.89);
+	fbenchmarkf("Ougi::sin", Ougi::sin, 0.89f);
+	ddbenchmarkd("std::pow", pow, 342.6745f, 4.0f);
+	fubenchmarkf("Ougi::pow(float, unsigned int)", Ougi::pow, 342.7645f, 4u);
+	fibenchmarkf("Ougi::pow(float, int)", Ougi::pow, 342.6745f, 4);
+	ubenchmarku("Ougi::factorial", Ougi::factorial, 8u);
 	
 	std::cout << std::endl;
 	
-	//=======================
-	// Vector2
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Vector 2               -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -187,9 +206,6 @@ void math()
 	std::cout << "a.Normalize(): " << a.Normalize() << std::endl;
 	std::cout << std::endl;
 	
-	//=======================
-	// Vector3
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Vector 3               -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -218,9 +234,6 @@ void math()
 	std::cout << "c.Normalize(): " << c.Normalize() << std::endl;
 	std::cout << std::endl;
 	
-	//=======================
-	// Vector4
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Vector 4               -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -248,9 +261,6 @@ void math()
 	std::cout << "e.Normalize(): " << e.Normalize() << std::endl;
 	std::cout << std::endl;
 	
-	//=======================
-	// Matrix2x2
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Matrix2x2              -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -258,9 +268,6 @@ void math()
 	std::cout << Ougi::Matrix2x2(11.0f, 12.0f, 13.0f, 14.0f) << std::endl;
 	std::cout << std::endl;
 	
-	//=======================
-	// Matrix3x3
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Matrix3x3              -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -268,9 +275,6 @@ void math()
 	std::cout << Ougi::Matrix3x3(15.0f, 16.0f, 17.0f, 18.0f, 19.0f, 20.0f, 21.0f, 22.0f, 23.0f) << std::endl;
 	std::cout << std::endl;
 	
-	//=======================
-	// Matrix4x4
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                  Matrix4x4              -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -283,11 +287,8 @@ void math()
 void standard()
 {
 #ifdef STANDARD
-	//=======================
-	// String
-	//=======================
 	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << "-                  String                 -" << std::endl;
+	std::cout << "-            String - Unit Testing        -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	
@@ -347,6 +348,69 @@ void standard()
 	std::cout << "-------------------------------------------" << std::endl;
 	
 	std::cout << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << "-            String - Benchmarking        -" << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << std::endl;
+	
+	std::string stdstring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
+	Ougi::String ougistring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		stdstring.substr(8, 8);
+	}
+	stop();
+	std::cout << "std::string::substr: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring.Substring(8);
+	}
+	stop();
+	std::cout << "Ougi::String::Substring(unsigned int): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring.Substring(8, 16);
+	}
+	stop();
+	std::cout << "Ougi::String::Substring(unsigned int, unsigned int): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		stdstring.find_first_of("CleClessStahnReidKleLloy");
+	}
+	stop();
+	std::cout << "std::string::find_first_of: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring.StartsWith("CleClessStahnReidKleLloy");
+	}
+	stop();
+	std::cout << "Ougi::String::StartsWith (worst-case): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		stdstring + stdstring;
+	}
+	stop();
+	std::cout << "std::string::operator+: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring + ougistring;
+	}
+	stop();
+	std::cout << "Ougi::String::operator+: " << duration() << std::endl;
 #endif
 }
 

@@ -163,7 +163,7 @@ float Ougi::log(float base, float arg)
 	return 0.0f;
 }
 
-float Ougi::factorial(unsigned int arg)
+unsigned int Ougi::factorial(unsigned int arg)
 {
 	unsigned int result = 1;
 	for (unsigned int i = 0; i < arg; ++i)

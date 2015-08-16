@@ -27,7 +27,7 @@ namespace Ougi
 	float pow(float base, float power);
 	
 	float log(float base, float arg);
-	float factorial(unsigned int arg);
+	unsigned int factorial(unsigned int arg);
 	
 	// private
 	float normalizeAngle(float rads);
