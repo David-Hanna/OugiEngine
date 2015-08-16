@@ -4,6 +4,8 @@
 // Functions - defines basic mathematical functions
 //-------------------------------------------------------------------------------------------
 
+#include "Constants.h"
+
 namespace Ougi
 {
 	float sqrt(float arg);

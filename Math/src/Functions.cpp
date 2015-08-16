@@ -41,9 +41,63 @@ float Ougi::abs(float arg)
 	return arg > 0.0f ? arg : -arg;
 }
 
+float normalizeAngle(float rads)
+{
+	while (rads < 0.0f)
+	{
+		rads += TWO_PI;
+	}
+	while (rads >= TWO_PI)
+	{
+		rads -= TWO_PI;
+	}
+	return rads;
+}
+
+float approximateSin(float rads)
+{
+	const float TWO_RADS = rads * rads;
+	const float THREE_RADS = TWO_RADS * rads;
+	return rads - (THREE_RADS * 0.1666667f) + (THREE_RADS * TWO_RADS * 0.008333333f);
+}
+
+float approximateCos(float rads)
+{
+	const float TWO_RADS = rads * rads;
+	const float FOUR_RADS = TWO_RADS * TWO_RADS;
+	return 1.0f - (TWO_RADS * 0.5f) + (FOUR_RADS * 0.04166667f) - (FOUR_RADS * TWO_RADS * 0.001388888f);
+}
+
+float approximateTan(float rads)
+{
+	const float TWO_RADS = rads * rads;
+	const float THREE_RADS = TWO_RADS * rads;
+	const float FIVE_RADS = THREE_RADS * TWO_RADS;
+	return rads + (THREE_RADS * 0.3333333f) + (FIVE_RADS * 0.1333333f) + (FIVE_RADS * TWO_RADS * 0.05396825f);
+}
+
 float sin(float rads)
 {
-	
+	rads = normalizeAngle(rads);
+	// for 3rd quadrant -> using -sin(x) == sin(-x).
+	// hopefully the small angle approximation works with negative inputs...
+	if (rads > HALF_PI && rads <= THREE_HALVES_PI)
+	{
+		rads = PI - rads;
+	}
+	// negative rads again here. same note as above.
+	else if (rads > THREE_HALVES_PI)
+	{
+		rads = TWO_PI - rads;
+	}
+	if (rads < QUARTER_PI)
+	{
+		return approximateSin(rads);
+	}
+	else
+	{
+		return approximateCos(HALF_PI - rads);
+	}
 }
 
 float cos(float rads)
