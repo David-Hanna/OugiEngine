@@ -15,22 +15,6 @@ float Ougi::sqrt(float arg)
 	return arg*u.x*(1.5f - arghalf*u.x*u.x);// Newton step, repeating increases accuracy
 }
 
-float Ougi::invsqrt(float arg)
-{
-	long i;
-	float x2, y;
-	const float threehalfs = 1.5F;
-
-	x2 = arg * 0.5F;
-	y = arg;
-	i = *(long *)&y;                       // evil floating point bit level hacking
-	i = 0x5f3759df - (i >> 1);             // magic number
-	y = *(float *)&i;
-	y = y * (threehalfs - (x2 * y * y));   // repeat for more accuracy
-
-	return y;
-}
-
 int Ougi::abs(int arg)
 {
 	return arg > 0 ? arg : -arg;
@@ -41,34 +25,34 @@ float Ougi::abs(float arg)
 	return arg > 0.0f ? arg : -arg;
 }
 
-float normalizeAngle(float rads)
+float Ougi::normalizeAngle(float rads)
 {
 	while (rads < 0.0f)
 	{
-		rads += TWO_PI;
+		rads += Ougi::TWO_PI;
 	}
-	while (rads >= TWO_PI)
+	while (rads >= Ougi::TWO_PI)
 	{
-		rads -= TWO_PI;
+		rads -= Ougi::TWO_PI;
 	}
 	return rads;
 }
 
-float approximateSin(float rads)
+float Ougi::approximateSin(float rads)
 {
 	const float TWO_RADS = rads * rads;
 	const float THREE_RADS = TWO_RADS * rads;
 	return rads - (THREE_RADS * 0.1666667f) + (THREE_RADS * TWO_RADS * 0.008333333f);
 }
 
-float approximateCos(float rads)
+float Ougi::approximateCos(float rads)
 {
 	const float TWO_RADS = rads * rads;
 	const float FOUR_RADS = TWO_RADS * TWO_RADS;
 	return 1.0f - (TWO_RADS * 0.5f) + (FOUR_RADS * 0.04166667f) - (FOUR_RADS * TWO_RADS * 0.001388888f);
 }
 
-float approximateTan(float rads)
+float Ougi::approximateTan(float rads)
 {
 	const float TWO_RADS = rads * rads;
 	const float THREE_RADS = TWO_RADS * rads;
@@ -76,58 +60,63 @@ float approximateTan(float rads)
 	return rads + (THREE_RADS * 0.3333333f) + (FIVE_RADS * 0.1333333f) + (FIVE_RADS * TWO_RADS * 0.05396825f);
 }
 
-float sin(float rads)
+float Ougi::sin(float rads)
 {
 	rads = normalizeAngle(rads);
 	// for 3rd quadrant -> using -sin(x) == sin(-x).
 	// hopefully the small angle approximation works with negative inputs...
-	if (rads > HALF_PI && rads <= THREE_HALVES_PI)
+	if (rads > Ougi::HALF_PI && rads <= Ougi::THREE_HALVES_PI)
 	{
-		rads = PI - rads;
+		rads = Ougi::PI - rads;
 	}
 	// negative rads again here. same note as above.
-	else if (rads > THREE_HALVES_PI)
+	else if (rads > Ougi::THREE_HALVES_PI)
 	{
-		rads = TWO_PI - rads;
+		rads = Ougi::TWO_PI - rads;
 	}
-	if (rads < QUARTER_PI)
+	if (rads < Ougi::QUARTER_PI)
 	{
 		return approximateSin(rads);
 	}
 	else
 	{
-		return approximateCos(HALF_PI - rads);
+		return approximateCos(Ougi::HALF_PI - rads);
 	}
 }
 
-float cos(float rads)
+float Ougi::cos(float rads)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float tan(float rads)
+float Ougi::tan(float rads)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float arcsin(float rads)
+float Ougi::arcsin(float rads)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float arccos(float rads)
+float Ougi::arccos(float rads)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float arctan(float rads)
+float Ougi::arctan(float rads)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float exp(int base, int power)
+float Ougi::pow(float base, unsigned int power)
 {
-	int result = 1;
+	float result = 1;
 	
 	while (power)
 	{
@@ -142,39 +131,39 @@ float exp(int base, int power)
 	return result;
 }
 
-float exp(int base, float power);
+float Ougi::pow(float base, int power)
 {
-	
-}
-
-float exp(float base, int power)
-{
-	float result = 1.0f;
-	
-	while (power)
+	bool inverse = power < 0;
+	if (inverse)
 	{
-		if (power & 1)
-		{
-			result *= base;
-		}
-		power >>= 1;
-		base *= base;
+		power = -power;
 	}
 	
-	return result;
-}
-
-float exp(float base, float power)
-{
+	float result = pow(base, (unsigned int)power);
 	
+	if (inverse)
+	{
+		return 1.0f / result;
+	}
+	else
+	{
+		return result;
+	}
 }
 
-float log(float base, float arg)
+float Ougi::pow(float base, float power)
 {
-	
+	// TODO
+	return 0.0f;
 }
 
-float factorial(unsigned int arg)
+float Ougi::log(float base, float arg)
+{
+	// TODO
+	return 0.0f;
+}
+
+float Ougi::factorial(unsigned int arg)
 {
 	unsigned int result = 1;
 	for (unsigned int i = 0; i < arg; ++i)

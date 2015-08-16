@@ -9,7 +9,6 @@
 namespace Ougi
 {
 	float sqrt(float arg);
-	float invsqrt(float arg);
 	
 	int abs(int arg);
 	float abs(float arg);
@@ -23,13 +22,18 @@ namespace Ougi
 	float arccos(float rads);
 	float arctan(float rads);
 	
-	float exp(int base, int power);
-	float exp(int base, float power);
-	float exp(float base, int power);
-	float exp(float base, float power);
+	float pow(float base, unsigned int power);
+	float pow(float base, int power);
+	float pow(float base, float power);
 	
 	float log(float base, float arg);
 	float factorial(unsigned int arg);
+	
+	// private
+	float normalizeAngle(float rads);
+	float approximateSin(float rads);
+	float approximateCos(float rads);
+	float approximateTan(float rads);
 }
 
 #endif

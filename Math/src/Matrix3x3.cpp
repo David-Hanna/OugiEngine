@@ -137,10 +137,10 @@ Ougi::Matrix3x3 Ougi::Matrix3x3::operator/=(const float divisor)
 
 bool Ougi::Matrix3x3::operator==(const Matrix3x3& rhs) const
 {
-	return equals(rhs, 0.0f);
+	return Equals(rhs, 0.0f);
 }
 
-bool Ougi::Matrix3x3::equals(const Matrix3x3& rhs, const float tolerance) const
+bool Ougi::Matrix3x3::Equals(const Matrix3x3& rhs, const float tolerance) const
 {
 	bool equal = true; int i = 0; int j = 0;
 	while (equal && i < 3)

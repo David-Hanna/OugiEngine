@@ -9,11 +9,10 @@
 #endif
 
 #include "Functions.h"
-#include "../../Standard/include/Comparable.h"
 
 namespace Ougi
 {
-	class Vector3 : public Comparable<Vector3>
+	class Vector3
 	{
 	public:
 		float x, y, z, __pad_w;

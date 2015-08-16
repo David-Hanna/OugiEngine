@@ -44,8 +44,8 @@ namespace Ougi
 		Matrix4x4 operator*=(const Matrix4x4& multiplier);
 		Matrix4x4 operator/=(const float divisor);
 
-		float operator==(const Matrix4x4& rhs) const;
-		float equals(const Matrix4x4& rhs, const float tolerance = 0.0f) const;
+		bool operator==(const Matrix4x4& rhs) const;
+		bool Equals(const Matrix4x4& rhs, const float tolerance = 0.0f) const;
 		 
 	protected:
 		float matrix[4][4];

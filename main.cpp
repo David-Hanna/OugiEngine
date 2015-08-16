@@ -1,9 +1,10 @@
 
 #define DEBUG
-//#define MATH
-#define STANDARD
+#define MATH
+//#define STANDARD
 
 #ifdef MATH
+#include "Math/include/Constants.h"
 #include "Math/include/Functions.h"
 #include "Math/include/Vector2.h"
 #include "Math/include/Vector3.h"
@@ -18,23 +19,142 @@
 #endif
 
 #include <iostream>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <limits>
+
+int TIMES = 10000000;
+std::clock_t start;
+std::clock_t end;
+
+void begin()
+{
+	start = std::clock();
+}
+
+void stop()
+{
+	end = std::clock();
+}
+
+double duration()
+{
+	return (((end - start) / ((double) CLOCKS_PER_SEC)) * 1000);
+}
+
+void ftestf(const char* name, float input, float val, float expected)
+{
+	std::cout << name << "(" << input << "): " << val << " == " << expected << ", "; 
+	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
+	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
+	std::cout << std::endl;
+}
+
+void fftestf(const char* name, float input1, float input2, float val, float expected)
+{
+	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " == " << expected << ", "; 
+	if (Ougi::abs(val - expected) < 0.0001f) std::cout << "PASS";
+	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
+	std::cout << std::endl;
+}
 
 void math()
 {
 #ifdef MATH
-	//=======================
-	// Functions
-	//=======================
+	float fval;
+
 	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << "-                  Functions              -" << std::endl;
+	std::cout << "-         Functions - Unit Tests          -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
-	std::cout << "Square root of 2 is: " << Ougi::sqrt(2.0f) << std::endl;
-	std::cout << "Inverse square root of 2 is: " << Ougi::invsqrt(2.0f) << std::endl;
-	std::cout << "Absolute value of 5 is: " << Ougi::abs(5) << std::endl;
-	std::cout << "Absolute value of -5 is: " << Ougi::abs(-5) << std::endl;
-	std::cout << "Absolute value of 4.6 is: " << Ougi::abs(4.6f) << std::endl;
-	std::cout << "Absolute value of -4.6 is: " << Ougi::abs(-4.6f) << std::endl;
+	
+	ftestf("Ougi::sqrt", 0.0f, Ougi::sqrt(0.0f), 0.0f);
+	ftestf("Ougi::sqrt", 2.0f, Ougi::sqrt(2.0f), 1.41386);
+	ftestf("Ougi::sqrt", 5.14f, Ougi::sqrt(5.14f), 2.26644);
+	ftestf("Ougi::sqrt", -3.0f, Ougi::sqrt(-3.0f), -std::numeric_limits<float>::infinity());
+	ftestf("Ougi::abs", 5, Ougi::abs(5), 5);
+	ftestf("Ougi::abs", -5, Ougi::abs(-5), 5);
+	ftestf("Ougi::abs", 4.6f, Ougi::abs(4.6f), 4.6f);
+	ftestf("Ougi::abs", -4.6f, Ougi::abs(-4.6f), 4.6f);
+	ftestf("Ougi::sin", 0.89f, Ougi::sin(0.89f), 0.777071f);
+	ftestf("Ougi::sin", -0.89f, Ougi::sin(-0.89f), -0.777071f);
+	ftestf("Ougi::sin", 5.41f, Ougi::sin(5.14f), -0.909959f);
+	ftestf("Ougi::sin", -5.92f, Ougi::sin(-5.92f), 0.355254f);
+	fftestf("Ougi::pow", 3, 4, Ougi::pow(3, 4), 81);
+	fftestf("Ougi::pow", 5.4f, 3, Ougi::pow(5.4f, 3), 157.464f);
+	
+	std::cout << std::endl;
+	
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << "-         Functions - Benchmarking        -" << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = sqrt(7346.123f);
+	}
+	stop();
+	std::cout << "std::sqrt: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = Ougi::sqrt(7346.123f);
+	}
+	stop();
+	std::cout << "ougi::sqrt: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = sin(0.89f);
+	}
+	stop();
+	std::cout << "std::sin: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = Ougi::sin(0.89f);
+	}
+	stop();
+	std::cout << "ougi::sin: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = pow(342.6745f, 4);
+	}
+	stop();
+	std::cout << "std::pow: " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = Ougi::pow(342.6745f, 4u);
+	}
+	stop();
+	std::cout << "ougi::pow(float, unsigned int): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = Ougi::pow(342.6745f, -4);
+	}
+	stop();
+	std::cout << "ougi::pow(float, int): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		fval = Ougi::factorial(8u);
+	}
+	stop();
+	std::cout << "ougi::factorial: " << duration() << std::endl;
+	
 	std::cout << std::endl;
 	
 	//=======================
@@ -60,7 +180,7 @@ void math()
 	std::cout << "a *= -3: " << (a *= -3) << std::endl;
 	std::cout << "a /= -3: " << (a /= -3) << std::endl;
 	std::cout << "a == b: " << (a == b) << std::endl;
-	std::cout << "a.equals(b, 50.0f): " << (a.equals(b, 50.0f)) << std::endl;
+	std::cout << "a.Equals(b, 50.0f): " << (a.Equals(b, 50.0f)) << std::endl;
 	std::cout << "a.LengthSquared(): " << a.LengthSquared() << std::endl;
 	std::cout << "a.Length(): " << a.Length() << std::endl;
 	std::cout << "a.Normalized(): " << a.Normalized() << std::endl;
@@ -91,7 +211,7 @@ void math()
 	std::cout << "c *= -2: " << (c *= -2) << std::endl;
 	std::cout << "c /= -2: " << (c /= -2) << std::endl;
 	std::cout << "c == d: " << (c == d) << std::endl;
-	std::cout << "c.equals(d, 50.0f): " << (c.equals(d, 50.0f)) << std::endl;
+	std::cout << "c.Equals(d, 50.0f): " << (c.Equals(d, 50.0f)) << std::endl;
 	std::cout << "c.LengthSquared(): " << c.LengthSquared() << std::endl;
 	std::cout << "c.Length(): " << c.Length() << std::endl;
 	std::cout << "c.Normalized(): " << c.Normalized() << std::endl;
@@ -121,7 +241,7 @@ void math()
 	std::cout << "e *= -2: " << (e *= -2) << std::endl;
 	std::cout << "e /= -2: " << (e /= -2) << std::endl;
 	std::cout << "e == f: " << (e == f) << std::endl;
-	std::cout << "e.equals(f, 50.0f): " << (e.equals(f, 50.0f)) << std::endl;
+	std::cout << "e.Equals(f, 50.0f): " << (e.Equals(f, 50.0f)) << std::endl;
 	std::cout << "e.LengthSquared(): " << e.LengthSquared() << std::endl;
 	std::cout << "e.Length(): " << e.Length() << std::endl;
 	std::cout << "e.Normalized(): " << e.Normalized() << std::endl;
@@ -162,6 +282,7 @@ void math()
 
 void standard()
 {
+#ifdef STANDARD
 	//=======================
 	// String
 	//=======================
@@ -225,9 +346,8 @@ void standard()
 	std::cout << "empty after clearing: " << empty << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
 	
-	empty.Clear();
-	
 	std::cout << std::endl;
+#endif
 }
 
 int main(int argc, char* argv[])

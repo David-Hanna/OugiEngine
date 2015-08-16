@@ -156,10 +156,10 @@ Ougi::Matrix4x4 Ougi::Matrix4x4::operator/=(const float divisor)
 
 bool Ougi::Matrix4x4::operator==(const Matrix4x4& rhs) const
 {
-	return equals(rhs, 0.0f);
+	return Equals(rhs, 0.0f);
 }
 
-bool Ougi::Matrix4x4::equals(const Matrix4x4& rhs, const float tolerance) const
+bool Ougi::Matrix4x4::Equals(const Matrix4x4& rhs, const float tolerance) const
 {
 	bool equal = true; int i = 0; int j = 0;
 	while (equal && i < 4)

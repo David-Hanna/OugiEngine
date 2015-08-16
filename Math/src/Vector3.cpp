@@ -2,7 +2,7 @@
 
 bool Ougi::Vector3::Equals(const Ougi::Vector3& rhs, const float tolerance) const
 {
-	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance)
+	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance);
 }
 
 bool Ougi::Vector3::MagnitudeEquals(const Ougi::Vector3& rhs, const float tolerance) const
@@ -12,12 +12,13 @@ bool Ougi::Vector3::MagnitudeEquals(const Ougi::Vector3& rhs, const float tolera
 
 bool Ougi::Vector3::DirectionEquals(const Ougi::Vector3& rhs, const float tolerance) const
 {
-	
+	// TODO
+	return false;
 }
 
 Ougi::Vector3 Ougi::Vector3::Normalize()
 {
-	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z));
+	float inverseLength = 1.0f / Ougi::sqrt((x * x) + (y * y) + (z * z));
 	x *= inverseLength;
 	y *= inverseLength;
 	z *= inverseLength;
@@ -26,7 +27,7 @@ Ougi::Vector3 Ougi::Vector3::Normalize()
 
 Ougi::Vector3 Ougi::Vector3::Normalized() const
 {
-	float inverseLength = Ougi::invsqrt((x * x) + (y * y) + (z * z));
+	float inverseLength = 1.0f / Ougi::sqrt((x * x) + (y * y) + (z * z));
 	return Vector3(x * inverseLength, y * inverseLength, z * inverseLength);
 }
 
