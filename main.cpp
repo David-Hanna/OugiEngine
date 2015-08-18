@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <string>
+#include <string.h>
 #include <cmath>
 #include <ctime>
 #include <limits>
@@ -343,6 +344,8 @@ void standard()
 	std::cout << "empty after assigning hello: " << empty << std::endl;
 	empty = mystring;
 	std::cout << "empty after assigning mystring: " << empty << std::endl;
+	empty = z;
+	std::cout << "empty after re-assigning z: " << empty << std::endl;
 	empty.Clear();
 	std::cout << "empty after clearing: " << empty << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -353,8 +356,60 @@ void standard()
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	
+	const char* cstring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
 	std::string stdstring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
 	Ougi::String ougistring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
+	
+	std::cout << "sizeof(stdstring): " << sizeof(stdstring) << std::endl;
+	std::cout << "sizeof(ougistring): " << sizeof(ougistring) << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		strlen(cstring);
+	}
+	stop();
+	std::cout << "strlen(cstring): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		Ougi::String::Length(cstring);
+	}
+	stop();
+	std::cout << "Ougi::String::Length(cstring): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		stdstring = 'c';
+	}
+	stop();
+	std::cout << "std::string::operator=(char): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring = 'c';
+	}
+	stop();
+	std::cout << "Ougi::String::operator=(char): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		stdstring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
+	}
+	stop();
+	std::cout << "std::string::operator=(const char*): " << duration() << std::endl;
+	
+	begin();
+	for (int i = 0; i < TIMES; ++i)
+	{
+		ougistring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
+	}
+	stop();
+	std::cout << "Ougi::String::operator=(const char*): " << duration() << std::endl;
 	
 	begin();
 	for (int i = 0; i < TIMES; ++i)
