@@ -20,7 +20,7 @@ INCLUDES =
 #/Math/include /Physics/include /Collections/include /Standard/include
 
 # define the cpp source files
-SRCS = main.cpp String.cpp Functions.cpp Vector2.cpp Vector3.cpp Vector4.cpp Matrix2x2.cpp Matrix3x3.cpp Matrix4x4.cpp
+SRCS = main.cpp Functions.cpp Vector2.cpp Vector3.cpp Vector4.cpp Matrix2x2.cpp Matrix3x3.cpp Matrix4x4.cpp
 
 # define the cpp object files 
 #

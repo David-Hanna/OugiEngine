@@ -1,6 +1,6 @@
 
 #define DEBUG
-//#define MATH
+#define MATH
 #define STANDARD
 
 #ifdef MATH
@@ -15,12 +15,9 @@
 #endif
 
 #ifdef STANDARD
-#include "Standard/include/String.h"
 #endif
 
 #include <iostream>
-#include <string>
-#include <string.h>
 #include <cmath>
 #include <ctime>
 #include <limits>
@@ -288,184 +285,7 @@ void math()
 void standard()
 {
 #ifdef STANDARD
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << "-            String - Unit Testing        -" << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl;
-	
-	std::cout << "-------------------------------------------" << std::endl;
-	Ougi::String empty;
-	std::cout << "Empty: " << empty << std::endl;
-	std::cout << "empty has any?: " << empty.Any() << std::endl;
-	std::cout << "Is empty empty?: " << empty.Empty() << std::endl;
-	std::cout << "Empty's length: " << empty.Length() << std::endl;
-	std::cout << "Empty at char 0: " << empty[0] << std::endl;
-	std::cout << "empty starts with c? " << empty.StartsWith('c') << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	Ougi::String z('z');
-	std::cout << "z: " << z << std::endl;
-	std::cout << "z has any?: " << z.Any() << std::endl;
-	std::cout << "Is z empty?: " << z.Empty() << std::endl;
-	std::cout << "z's length: " << z.Length() << std::endl;
-	std::cout << "z at char 0: " << z[0] << std::endl;
-	std::cout << "z starts with z?: " << z.StartsWith('z') << std::endl;
-	std::cout << "z contains z?: " << z.Contains('z') << std::endl;
-	std::cout << "z insert a at 0: " << z.Insert('a', 0) << std::endl;
-	std::cout << "z insert a at 1: " << z.Insert('a', 1) << std::endl;
-	std::cout << "z equals z?: " << (z == 'z') << std::endl;
-	std::cout << "z equals a?: " << (z == 'a') << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	Ougi::String hello("hello");
-	std::cout << "hello: " << hello << std::endl;
-	std::cout << "hello has any?: " << hello.Any() << std::endl;
-	std::cout << "Is hello empty?: " << hello.Empty() << std::endl;
-	std::cout << "hello's length: " << hello.Length() << std::endl;
-	std::cout << "hello at char 2: " << hello[2] << std::endl;
-	std::cout << "substring of hello at 1: " << hello.Substring(1) << std::endl;
-	std::cout << "hello starts with hell?: " << hello.StartsWith("hell") << std::endl;
-	std::cout << "hello + \' : \' + hello: " << hello + " / " + hello << std::endl;
-	std::cout << "hello contains llo? " << hello.Contains("llo") << std::endl;
-	std::cout << "hello equals hello?: " << (hello == "hello") << std::endl;
-	std::cout << "hello equals magic?: " << (hello == "magic") << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	Ougi::String mystring(Ougi::String("mystring"));
-	std::cout << "mystring: " << mystring << std::endl;
-	std::cout << "mystring has any?: " << mystring.Any() << std::endl;
-	std::cout << "Is mystring empty?: " << mystring.Empty() << std::endl;
-	std::cout << "mystring's length: " << mystring.Length() << std::endl;
-	std::cout << "mystring at char 6: " << mystring[6] << std::endl;
-	std::cout << "substring of mystring from 3 to 6: " << mystring.Substring(3, 6) << std::endl;
-	std::cout << "mystring starts with magic?: " << mystring.StartsWith("magic") << std::endl;
-	std::cout << "mystring contains foo?: " << mystring.Contains("foo") << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	empty = z;
-	std::cout << "empty after assigning z: " << empty << std::endl;
-	empty = hello;
-	std::cout << "empty after assigning hello: " << empty << std::endl;
-	empty = mystring;
-	std::cout << "empty after assigning mystring: " << empty << std::endl;
-	empty = z;
-	std::cout << "empty after re-assigning z: " << empty << std::endl;
-	empty.Clear();
-	std::cout << "empty after clearing: " << empty << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	
-	std::cout << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << "-            String - Benchmarking        -" << std::endl;
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl;
-	
-	const char* cstring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
-	std::string stdstring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
-	Ougi::String ougistring("CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger");
-	
-	std::cout << "sizeof(stdstring): " << sizeof(stdstring) << std::endl;
-	std::cout << "sizeof(ougistring): " << sizeof(ougistring) << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		strlen(cstring);
-	}
-	stop();
-	std::cout << "strlen(cstring): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		Ougi::String::Length(cstring);
-	}
-	stop();
-	std::cout << "Ougi::String::Length(cstring): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		stdstring = 'c';
-	}
-	stop();
-	std::cout << "std::string::operator=(char): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring = 'c';
-	}
-	stop();
-	std::cout << "Ougi::String::operator=(char): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		stdstring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
-	}
-	stop();
-	std::cout << "std::string::operator=(const char*): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring = "CleClessStahnReidKyleLloydVeigueSenelLukeYuriAsbelJudeLudger";
-	}
-	stop();
-	std::cout << "Ougi::String::operator=(const char*): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		stdstring.substr(8, 8);
-	}
-	stop();
-	std::cout << "std::string::substr: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring.Substring(8);
-	}
-	stop();
-	std::cout << "Ougi::String::Substring(unsigned int): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring.Substring(8, 16);
-	}
-	stop();
-	std::cout << "Ougi::String::Substring(unsigned int, unsigned int): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		stdstring.find_first_of("CleClessStahnReidKleLloy");
-	}
-	stop();
-	std::cout << "std::string::find_first_of: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring.StartsWith("CleClessStahnReidKleLloy");
-	}
-	stop();
-	std::cout << "Ougi::String::StartsWith (worst-case): " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		stdstring + stdstring;
-	}
-	stop();
-	std::cout << "std::string::operator+: " << duration() << std::endl;
-	
-	begin();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		ougistring + ougistring;
-	}
-	stop();
-	std::cout << "Ougi::String::operator+: " << duration() << std::endl;
+
 #endif
 }
 
