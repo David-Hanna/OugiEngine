@@ -26,32 +26,30 @@
 
 namespace Ougi
 {
-	float sqrt(float arg);
+	float Sqrt(float arg);
 	
-	int abs(int arg);
-	float abs(float arg);
+	int Abs(int arg);
+	float Abs(float arg);
 	
-	// MUST-USE!! http://mathonweb.com/help_ebook/html/algorithms.htm
-	float sin(float rads);
-	float cos(float rads);
-	float tan(float rads);
+	int Floor(float arg);
+	int Ceiling(float arg);
 	
-	float arcsin(float rads);
-	float arccos(float rads);
-	float arctan(float rads);
+	float ModFloat(float val, float start, float end);
+
+	float Sin(float rads);
+	float Cos(float rads);
+	float Tan(float rads);
 	
-	float pow(float base, unsigned int power);
-	float pow(float base, int power);
-	float pow(float base, float power);
+	float Arcsin(float rads);
+	float Arccos(float rads);
+	float Arctan(float rads);
 	
-	float log(float base, float arg);
-	unsigned int factorial(unsigned int arg);
+	float Pow(float base, unsigned int power);
+	float Pow(float base, int power);
+	float Pow(float base, float power);
 	
-	// private
-	float normalizeAngle(float rads);
-	float approximateSin(float rads);
-	float approximateCos(float rads);
-	float approximateTan(float rads);
+	float Log(float base, float arg);
+	unsigned int Factorial(unsigned int arg);
 }
 
 #endif

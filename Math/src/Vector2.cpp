@@ -7,7 +7,7 @@ bool Ougi::Vector2::Equals(const Ougi::Vector2& rhs, const float tolerance) cons
 
 bool Ougi::Vector2::MagnitudeEquals(const Ougi::Vector2& rhs, const float tolerance) const
 {
-	return Ougi::abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
 }
 
 bool Ougi::Vector2::DirectionEquals(const Ougi::Vector2& rhs, const float tolerance) const
@@ -18,7 +18,7 @@ bool Ougi::Vector2::DirectionEquals(const Ougi::Vector2& rhs, const float tolera
 
 Ougi::Vector2 Ougi::Vector2::Normalize()
 {
-	float inverseLength = 1.0f / Ougi::sqrt((x * x) + (y * y));
+	float inverseLength = 1.0f / Ougi::Sqrt((x * x) + (y * y));
 	x *= inverseLength;
 	y *= inverseLength;
 	return (*this);
@@ -26,6 +26,6 @@ Ougi::Vector2 Ougi::Vector2::Normalize()
 
 Ougi::Vector2 Ougi::Vector2::Normalized() const
 {
-	float inverseLength = 1.0f / Ougi::sqrt((x * x) + (y * y));
+	float inverseLength = 1.0f / Ougi::Sqrt((x * x) + (y * y));
 	return Vector2(x * inverseLength, y * inverseLength);
 }

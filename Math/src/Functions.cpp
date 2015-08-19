@@ -1,120 +1,91 @@
 #include "../include/Functions.h"
 
-float Ougi::sqrt(float arg)
-{
-	const float arghalf = 0.5f*arg;
-
-	union // get bits for floating value
-	{
-		float x;
-		int i;
-	} u;
-
-	u.x = arg;
-	u.i = 0x5f3759df - (u.i >> 1);  // gives initial guess y0
-	return arg*u.x*(1.5f - arghalf*u.x*u.x);// Newton step, repeating increases accuracy
+float Ougi::Sqrt(float arg)
+{	
+	unsigned int i = *(unsigned int*) &arg;
+	i = (i + (127 << 23)) >> 1;
+	return *(float*) &i;
 }
 
-int Ougi::abs(int arg)
+int Ougi::Abs(int arg)
 {
 	return arg > 0 ? arg : -arg;
 }
 
-float Ougi::abs(float arg)
+float Ougi::Abs(float arg)
 {
 	return arg > 0.0f ? arg : -arg;
 }
 
-float Ougi::normalizeAngle(float rads)
+int Ougi::Floor(float arg)
 {
-	while (rads < 0.0f)
+	return arg >= 0.0f ? (int)(arg) : (int)(arg - 1);
+}
+
+int Ougi::Ceiling(float arg)
+{
+	return arg >= 0.0f ? (int)(arg + 1) : (int)(arg);
+}
+
+float Ougi::ModFloat(float val, float start, float end)
+{
+	if (val < start || val > end)
 	{
-		rads += Ougi::TWO_PI;
+		const float width = end - start;
+		const float offsetValue = val - start;
+		
+		return (offsetValue - (Floor(offsetValue / width) * width)) + start;
 	}
-	while (rads >= Ougi::TWO_PI)
-	{
-		rads -= Ougi::TWO_PI;
-	}
+	return val;
+}
+
+float Ougi::Sin(float rads)
+{	
+	rads = ModFloat(rads, -PI, PI);
+#if EXTRA_PRECISION
+	const float y = (4.0f / PI) * rads + (-4.0f / (PI * PI)) * rads * Abs(rads);
+	return 0.225f * (y * Abs(y) - y) + y;
+#else
+	return (4.0f / PI) * rads + (-4.0f / (PI * PI)) * rads * Abs(rads);
+#endif
+}
+
+float Ougi::Cos(float rads)
+{
+	rads *= 1.0f / (2.0f * PI);
+	rads -= 0.25f + Floor(rads + 0.25f);
+	rads *= 16.0f * (Abs(rads) - 0.5f);
+#if EXTRA_PRECISION
+	rads += 0.225f * rads * (Abs(rads) - 1.0f);
+#endif
 	return rads;
 }
 
-float Ougi::approximateSin(float rads)
-{
-	const float TWO_RADS = rads * rads;
-	const float THREE_RADS = TWO_RADS * rads;
-	return rads - (THREE_RADS * 0.1666667f) + (THREE_RADS * TWO_RADS * 0.008333333f);
-}
-
-float Ougi::approximateCos(float rads)
-{
-	const float TWO_RADS = rads * rads;
-	const float FOUR_RADS = TWO_RADS * TWO_RADS;
-	return 1.0f - (TWO_RADS * 0.5f) + (FOUR_RADS * 0.04166667f) - (FOUR_RADS * TWO_RADS * 0.001388888f);
-}
-
-float Ougi::approximateTan(float rads)
-{
-	const float TWO_RADS = rads * rads;
-	const float THREE_RADS = TWO_RADS * rads;
-	const float FIVE_RADS = THREE_RADS * TWO_RADS;
-	return rads + (THREE_RADS * 0.3333333f) + (FIVE_RADS * 0.1333333f) + (FIVE_RADS * TWO_RADS * 0.05396825f);
-}
-
-float Ougi::sin(float rads)
-{
-	rads = normalizeAngle(rads);
-	// for 3rd quadrant -> using -sin(x) == sin(-x).
-	// hopefully the small angle approximation works with negative inputs...
-	if (rads > Ougi::HALF_PI && rads <= Ougi::THREE_HALVES_PI)
-	{
-		rads = Ougi::PI - rads;
-	}
-	// negative rads again here. same note as above.
-	else if (rads > Ougi::THREE_HALVES_PI)
-	{
-		rads = Ougi::TWO_PI - rads;
-	}
-	if (rads < Ougi::QUARTER_PI)
-	{
-		return approximateSin(rads);
-	}
-	else
-	{
-		return approximateCos(Ougi::HALF_PI - rads);
-	}
-}
-
-float Ougi::cos(float rads)
+float Ougi::Tan(float rads)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::tan(float rads)
+float Ougi::Arcsin(float rads)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::arcsin(float rads)
+float Ougi::Arccos(float rads)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::arccos(float rads)
+float Ougi::Arctan(float rads)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::arctan(float rads)
-{
-	// TODO
-	return 0.0f;
-}
-
-float Ougi::pow(float base, unsigned int power)
+float Ougi::Pow(float base, unsigned int power)
 {
 	float result = 1;
 	
@@ -131,7 +102,7 @@ float Ougi::pow(float base, unsigned int power)
 	return result;
 }
 
-float Ougi::pow(float base, int power)
+float Ougi::Pow(float base, int power)
 {
 	bool inverse = power < 0;
 	if (inverse)
@@ -139,7 +110,7 @@ float Ougi::pow(float base, int power)
 		power = -power;
 	}
 	
-	float result = pow(base, (unsigned int)power);
+	float result = Pow(base, (unsigned int)power);
 	
 	if (inverse)
 	{
@@ -151,19 +122,19 @@ float Ougi::pow(float base, int power)
 	}
 }
 
-float Ougi::pow(float base, float power)
+float Ougi::Pow(float base, float power)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::log(float base, float arg)
+float Ougi::Log(float base, float arg)
 {
 	// TODO
 	return 0.0f;
 }
 
-unsigned int Ougi::factorial(unsigned int arg)
+unsigned int Ougi::Factorial(unsigned int arg)
 {
 	unsigned int result = 1;
 	for (unsigned int i = 0; i < arg; ++i)

@@ -13,7 +13,7 @@ vpath %.cpp ./Standard/src ./Math/src
 CC = g++
 
 # define any compile-time flags
-CFLAGS = -std=c++11 -Wall -g
+CFLAGS = -std=c++11 -Wall -g -O2
 
 # define any directories containing header files other than /usr/include
 INCLUDES =

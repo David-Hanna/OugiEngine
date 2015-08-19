@@ -23,11 +23,11 @@
 #define OUGI_MATH_MATRIX2X2_H
 
 #ifdef DEBUG
-#include <ostream>
+#include <iostream>
 #endif
 
-#include "../include/Functions.h"
-#include "../include/Vector2.h"
+#include "Functions.h"
+#include "Vector2.h"
 
 namespace Ougi
 {

@@ -129,7 +129,7 @@ bool Ougi::Matrix2x2::Equals(const Matrix2x2& rhs, const float tolerance) const
 	{
 		while (equal && j < 2)
 		{
-			if (Ougi::abs(matrix[i][j] - rhs[i][j]) > tolerance)
+			if (Ougi::Abs(matrix[i][j] - rhs[i][j]) > tolerance)
 				equal = false;
 			j++;
 		}

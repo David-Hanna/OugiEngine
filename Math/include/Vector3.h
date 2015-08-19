@@ -23,7 +23,7 @@
 #define OUGI_MATH_VECTOR3_H
 
 #ifdef DEBUG
-#include <ostream>
+#include <iostream>
 #endif
 
 #include "Functions.h"
@@ -59,7 +59,7 @@ namespace Ougi
 		bool DirectionEquals(const Vector3& rhs, const float tolerance = 0.0f) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z); }
-		float Length() const										{ return Ougi::sqrt(LengthSquared()); }
+		float Length() const										{ return Ougi::Sqrt(LengthSquared()); }
 
 		Vector3 Normalize();
 		Vector3 Normalized() const;

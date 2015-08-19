@@ -166,7 +166,7 @@ bool Ougi::Matrix4x4::Equals(const Matrix4x4& rhs, const float tolerance) const
 	{
 		while (equal && j < 4)
 		{
-			if (Ougi::abs(matrix[i][j] - rhs[i][j]) > tolerance)
+			if (Ougi::Abs(matrix[i][j] - rhs[i][j]) > tolerance)
 				equal = false;
 			j++;
 		}
