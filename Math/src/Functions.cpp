@@ -1,3 +1,24 @@
+//--------------------------------------------------------------------------------
+// Functions.cpp
+// Author: David Hanna
+// Copyright (C) 20xx David Hanna, Inc.
+//
+// This file is part of Ougi Engine.
+//
+// Ougi Engine is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Ougi Engine is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Ougi Engine.  If not, see <http://www.gnu.org/licenses/>.
+//--------------------------------------------------------------------------------
+
 #include "../include/Functions.h"
 
 float Ougi::Sqrt(float arg)
@@ -19,7 +40,22 @@ float Ougi::Abs(float arg)
 
 int Ougi::Floor(float arg)
 {
-	return arg >= 0.0f ? (int)(arg) : (int)(arg - 1);
+	if (arg >= 0.0f)
+	{
+		return (int)(arg);
+	}
+	else
+	{
+		// (int)(arg - 1) is incorrect in the case arg is already an int
+		if ((float)((int)arg) == arg)
+		{
+			return arg;
+		}
+		else
+		{
+			return (int)(arg - 1);
+		}
+	}
 }
 
 int Ougi::Ceiling(float arg)
@@ -43,10 +79,10 @@ float Ougi::Sin(float rads)
 {	
 	rads = ModFloat(rads, -PI, PI);
 #if EXTRA_PRECISION
-	const float y = (4.0f / PI) * rads + (-4.0f / (PI * PI)) * rads * Abs(rads);
+	const float y = (4.0f / PI) * rads + (-4.0f / (PI_SQUARED)) * rads * Abs(rads);
 	return 0.225f * (y * Abs(y) - y) + y;
 #else
-	return (4.0f / PI) * rads + (-4.0f / (PI * PI)) * rads * Abs(rads);
+	return (4.0f / PI) * rads + (-4.0f / (PI_SQUARED)) * rads * Abs(rads);
 #endif
 }
 
