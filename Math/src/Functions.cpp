@@ -60,7 +60,22 @@ int Ougi::Floor(float arg)
 
 int Ougi::Ceiling(float arg)
 {
-	return arg >= 0.0f ? (int)(arg + 1) : (int)(arg);
+	if (arg >= 0.0f)
+	{
+		// (int)(arg + 1) is incorrect in the case arg is already an int
+		if ((float)((int)arg) == arg)
+		{
+			return arg;
+		}
+		else
+		{
+			return (int)(arg + 1);
+		}
+	}
+	else
+	{
+		return (int)arg;
+	}
 }
 
 float Ougi::ModFloat(float val, float start, float end)
@@ -78,7 +93,7 @@ float Ougi::ModFloat(float val, float start, float end)
 float Ougi::Sin(float rads)
 {	
 	rads = ModFloat(rads, -PI, PI);
-#if EXTRA_PRECISION
+#ifdef EXTRA_PRECISION
 	const float y = (4.0f / PI) * rads + (-4.0f / (PI_SQUARED)) * rads * Abs(rads);
 	return 0.225f * (y * Abs(y) - y) + y;
 #else
@@ -91,7 +106,7 @@ float Ougi::Cos(float rads)
 	rads *= 1.0f / (2.0f * PI);
 	rads -= 0.25f + Floor(rads + 0.25f);
 	rads *= 16.0f * (Abs(rads) - 0.5f);
-#if EXTRA_PRECISION
+#ifdef EXTRA_PRECISION
 	rads += 0.225f * rads * (Abs(rads) - 1.0f);
 #endif
 	return rads;
@@ -99,8 +114,8 @@ float Ougi::Cos(float rads)
 
 float Ougi::Tan(float rads)
 {
-	// TODO
-	return 0.0f;
+	// Improve speed and accuracy with non-sin/cos algorithm.
+	return Sin(rads) / Cos(rads);
 }
 
 float Ougi::Arcsin(float rads)

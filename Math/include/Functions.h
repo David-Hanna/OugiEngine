@@ -24,6 +24,8 @@
 
 #include "Constants.h"
 
+//#define EXTRA_PRECISION  // for sin and cos, lose a little speed for more accuracy. still faster than std::sin/cos
+
 namespace Ougi
 {
 	float Sqrt(float arg);

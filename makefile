@@ -12,6 +12,7 @@ vpath %.cpp ./Math/src
 CC = g++
 
 # define any compile-time flags
+# -02 for optimization!
 CFLAGS = -std=c++11 -Wall -g -O2
 
 # define any directories containing header files other than /usr/include

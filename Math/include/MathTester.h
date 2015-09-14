@@ -46,6 +46,7 @@ namespace Ougi
 		
 		static void ftestf(const char* name, float input, float val, float expected);
 		static void fftestf(const char* name, float input1, float input2, float val, float expected);
+		static void ffftestf(const char* name, float input1, float input2, float input3, float val, float expected);
 		static void ftesti(const char* name, float input, float val, int expected);
 	
 		// Benchmarking
@@ -56,6 +57,7 @@ namespace Ougi
 		static double duration();
 		
 		static void fbenchmarkf(const char* name, float (*func)(float), float input);
+		static void fffbenchmarkf(const char* name, float (*func)(float, float, float), float input1, float input2, float input3);
 		static void fbenchmarki(const char* name, int (*func)(float), float input);
 		static void dbenchmarkd(const char* name, double (*func)(double), double input);
 		static void ffbenchmarkf(const char* name, float (*func)(float, float), float input1, float input2);
