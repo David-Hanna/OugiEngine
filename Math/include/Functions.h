@@ -24,7 +24,7 @@
 
 #include "Constants.h"
 
-//#define EXTRA_PRECISION  // for sin and cos, lose a little speed for more accuracy. still faster than std::sin/cos
+#define EXTRA_PRECISION  // for sin and cos, lose a little speed for more accuracy. still faster than std::sin/cos
 
 namespace Ougi
 {
@@ -40,17 +40,23 @@ namespace Ougi
 
 	float Sin(float rads);
 	float Cos(float rads);
+	float ApproximateTan(float rads); // private - use Tan instead.
 	float Tan(float rads);
 	
-	float Arcsin(float rads);
-	float Arccos(float rads);
-	float Arctan(float rads);
+	float Arcsin(float arg); // domain -1 <= arg <= 1
+	float Arccos(float arg); // domain 0 <= arg <= PI
+	float ApproximateArctan(float arg); // private - use Tan instead.
+	float Arctan(float arg);
+	
+	float Log(float base, float arg);
+	
+	float Exp(int power);
+	float Exp(float power);
 	
 	float Pow(float base, unsigned int power);
 	float Pow(float base, int power);
 	float Pow(float base, float power);
 	
-	float Log(float base, float arg);
 	unsigned int Factorial(unsigned int arg);
 }
 

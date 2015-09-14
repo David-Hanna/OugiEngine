@@ -50,8 +50,8 @@ void Ougi::MathTester::Test()
 	std::cout << std::endl;
 	
 	ftestf("Ougi::Sqrt", 0.0f, Ougi::Sqrt(0.0f), 0.0f);
-	ftestf("Ougi::Sqrt", 2.0f, Ougi::Sqrt(2.0f), 1.41386);
-	ftestf("Ougi::Sqrt", 5.14f, Ougi::Sqrt(5.14f), 2.26644);
+	ftestf("Ougi::Sqrt", 2.0f, Ougi::Sqrt(2.0f), 1.41386f);
+	ftestf("Ougi::Sqrt", 5.14f, Ougi::Sqrt(5.14f), 2.26644f);
 	
 	ftestf("Ougi::Abs", 5, Ougi::Abs(5), 5);
 	ftestf("Ougi::Abs", -5, Ougi::Abs(-5), 5);
@@ -91,14 +91,34 @@ void Ougi::MathTester::Test()
 	ftestf("Ougi::Cos", 4.89f, Ougi::Cos(4.89f), 0.176679f);
 	ftestf("Ougi::Cos", 13.45f, Ougi::Cos(13.45f), 0.63435f);
 	
-	ftestf("Ougi::Tan", -7.89f, Ougi::Tan(-7.89f), 27.7516);
-	ftestf("Ougi::Tan", -0.12f, Ougi::Tan(-0.12f), -0.120579);
-	ftestf("Ougi::Tan", 0.12f, Ougi::Tan(0.12f), 0.120579);
-	ftestf("Ougi::Tan", 1.12f, Ougi::Tan(1.12f), 2.06595);
-	ftestf("Ougi::Tan", 2.36f, Ougi::Tan(2.36f), -0.992417);
-	ftestf("Ougi::Tan", 3.55f, Ougi::Tan(3.55f), 0.432739);
-	ftestf("Ougi::Tan", 4.89f, Ougi::Tan(4.89f), -5.57095);
-	ftestf("Ougi::Tan", 13.45f, Ougi::Tan(13.45f), 1.21864);
+	ftestf("Ougi::Tan", -7.89f, Ougi::Tan(-7.89f), 27.7516f);
+	ftestf("Ougi::Tan", -0.12f, Ougi::Tan(-0.12f), -0.120579f);
+	ftestf("Ougi::Tan", 0.12f, Ougi::Tan(0.12f), 0.120579f);
+	ftestf("Ougi::Tan", 1.12f, Ougi::Tan(1.12f), 2.06595f);
+	ftestf("Ougi::Tan", 2.36f, Ougi::Tan(2.36f), -0.992417f);
+	ftestf("Ougi::Tan", 3.55f, Ougi::Tan(3.55f), 0.432739f);
+	ftestf("Ougi::Tan", 4.89f, Ougi::Tan(4.89f), -5.57095f);
+	ftestf("Ougi::Tan", 13.45f, Ougi::Tan(13.45f), 1.21864f);
+	
+	ftestf("Ougi::Arcsin", -1.0f, Ougi::Arcsin(-1.0f), -1.57079f);
+	ftestf("Ougi::Arcsin", -0.67f, Ougi::Arcsin(-0.67f), -0.734208f);
+	ftestf("Ougi::Arcsin", -0.12f, Ougi::Arcsin(-0.12f), -0.120289f);
+	ftestf("Ougi::Arcsin", 0.12f, Ougi::Arcsin(0.12f), 0.120289f);
+	ftestf("Ougi::Arcsin", 0.35f, Ougi::Arcsin(0.35f), 0.357571f);
+	ftestf("Ougi::Arcsin", 1.0f, Ougi::Arcsin(1.0f), 1.57079f);
+	
+	ftestf("Ougi::Arccos", 0.12f, Ougi::Arccos(0.12f), 1.45051f);
+	ftestf("Ougi::Arccos", 0.35f, Ougi::Arccos(0.35f), 1.21322f);
+	ftestf("Ougi::Arccos", 1.0f, Ougi::Arccos(1.0f), 0.0f);
+	
+	ftestf("Ougi::Arctan", -7.89f, Ougi::Arctan(-7.89f), -1.44472f);
+	ftestf("Ougi::Arctan", -0.12f, Ougi::Arctan(-0.12f), -0.119428f);
+	ftestf("Ougi::Arctan", 0.12f, Ougi::Arctan(0.12f), 0.119428f);
+	ftestf("Ougi::Arctan", 1.12f, Ougi::Arctan(1.12f), 0.841941f);
+	ftestf("Ougi::Arctan", 2.36f, Ougi::Arctan(2.36f), 1.17f);
+	ftestf("Ougi::Arctan", 3.55f, Ougi::Arctan(3.55f), 1.29622f);
+	ftestf("Ougi::Arctan", 4.89f, Ougi::Arctan(4.89f), 1.36907f);
+	ftestf("Ougi::Arctan", 13.45f, Ougi::Arctan(13.45f), 1.49658f);
 	
 	fftestf("Ougi::Pow", 3, 4, Ougi::Pow(3, 4), 81);
 	fftestf("Ougi::Pow", 5.4f, 3, Ougi::Pow(5.4f, 3), 157.464f);
@@ -136,6 +156,15 @@ void Ougi::MathTester::Benchmark()
 	
 	dbenchmarkd("std::tan", std::tan, 56.321f);
 	fbenchmarkf("Ougi::Tan", Ougi::Tan, 56.321f);
+	
+	dbenchmarkd("std::asin", std::asin, 0.321f);
+	fbenchmarkf("Ougi::Arcsin", Ougi::Arcsin, 0.321f);
+	
+	dbenchmarkd("std::acos", std::acos, 0.321f);
+	fbenchmarkf("Ougi::Arccos", Ougi::Arccos, 0.321f);
+	
+	dbenchmarkd("std::atan", std::atan, 56.321f);
+	fbenchmarkf("Ougi::Arctan", Ougi::Arctan, 56.321f);
 	
 	ddbenchmarkd("std::pow", std::pow, 342.6745f, 4.0f);
 	fubenchmarkf("Ougi::Pow(float, unsigned int)", Ougi::Pow, 342.7645f, 4u);

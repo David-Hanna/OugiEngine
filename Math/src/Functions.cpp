@@ -112,25 +112,154 @@ float Ougi::Cos(float rads)
 	return rads;
 }
 
+float Ougi::ApproximateTan(float rads)
+{
+	const float TWO_RADS = rads * rads;
+	const float THREE_RADS = TWO_RADS * rads;
+	const float FIVE_RADS = THREE_RADS * TWO_RADS;
+	
+	return rads + (THREE_RADS / 3.0f) + ((2.0f * FIVE_RADS) / 15.0f)
+#ifdef EXTRA_PRECISION
+	+ ((17.0f * FIVE_RADS * TWO_RADS) / 315.0f)
+#endif
+	;
+}
+
 float Ougi::Tan(float rads)
 {
-	// Improve speed and accuracy with non-sin/cos algorithm.
-	return Sin(rads) / Cos(rads);
+	bool negative;
+	bool reciprocal;
+	
+	rads = ModFloat(rads, 0.0f, PI);
+	
+	if (rads > HALF_PI)
+	{
+		rads = -rads + PI;
+		negative = true;
+	}
+	else
+	{
+		negative = false;
+	}
+	
+	if (rads > QUARTER_PI)
+	{
+		rads = HALF_PI - rads;
+		reciprocal = true;
+	}
+	else
+	{
+		reciprocal = false;
+	}
+	
+	float result;
+	
+	if (rads > EIGHTH_PI)
+	{
+		const float HALF_TAN = ApproximateTan(rads / 2.0f);
+		result = (2 * HALF_TAN) / (1 - (HALF_TAN * HALF_TAN));
+	}
+	else
+	{
+		result = ApproximateTan(rads);
+	}
+	
+	if (negative)
+	{
+		result = -result;
+	}
+	if (reciprocal)
+	{
+		result = 1 / result;
+	}
+	
+	return result;
 }
 
-float Ougi::Arcsin(float rads)
+float Ougi::Arcsin(float arg)
+{
+	return Arctan(arg / Sqrt(1.0f - (arg * arg)));
+}
+
+float Ougi::Arccos(float arg)
+{
+	return Arctan(Sqrt(1.0f - (arg * arg)) / arg);
+}
+
+float Ougi::ApproximateArctan(float arg)
+{
+	const float TWO_ARG = arg * arg;
+	const float THREE_ARG = TWO_ARG * arg;
+	return arg - (THREE_ARG / 3.0f) + ((THREE_ARG * TWO_ARG) / 5.0f);
+}
+
+float Ougi::Arctan(float arg)
+{
+	bool negative;
+	bool complementaryAngle;
+	bool identity;
+	
+	if (arg < 0.0f)
+	{
+		arg = -arg;
+		negative = true;
+	}
+	else
+	{
+		negative = false;
+	}
+	
+	if (arg > 1.0f)
+	{
+		arg = 1.0f / arg;
+		complementaryAngle = true;
+	}
+	else
+	{
+		complementaryAngle = false;
+	}
+	
+	if (arg > 0.267949f)
+	{
+		arg = ((1.73205f * arg) - 1) / (1.73205f + arg);
+		identity = true;
+	}
+	else
+	{
+		identity = false;
+	}
+	
+	float result = ApproximateArctan(arg);
+	
+	if (identity)
+	{
+		result = SIXTH_PI + result;
+	}
+	if (complementaryAngle)
+	{
+		result = HALF_PI - result;
+	}
+	if (negative)
+	{
+		result = -result;
+	}
+	
+	return result;
+}
+
+float Ougi::Log(float base, float arg)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::Arccos(float rads)
+float Ougi::Exp(int power)
 {
 	// TODO
 	return 0.0f;
 }
 
-float Ougi::Arctan(float rads)
+float Ougi::Exp(float power)
 {
 	// TODO
 	return 0.0f;
@@ -174,12 +303,6 @@ float Ougi::Pow(float base, int power)
 }
 
 float Ougi::Pow(float base, float power)
-{
-	// TODO
-	return 0.0f;
-}
-
-float Ougi::Log(float base, float arg)
 {
 	// TODO
 	return 0.0f;

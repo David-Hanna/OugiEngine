@@ -26,6 +26,8 @@ namespace Ougi
 {
 	const float E = 2.71828f;
 	
+	const float EIGHTH_PI = 0.392699f;
+	const float SIXTH_PI = 0.523598f;
 	const float QUARTER_PI = 0.785398f;
 	const float HALF_PI = 1.57079f;
 	const float PI = 3.14159;
