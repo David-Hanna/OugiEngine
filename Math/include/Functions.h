@@ -45,7 +45,7 @@ namespace Ougi
 	
 	float Arcsin(float arg); // domain -1 <= arg <= 1
 	float Arccos(float arg); // domain 0 <= arg <= PI
-	float ApproximateArctan(float arg); // private - use Tan instead.
+	float ApproximateArctan(float arg); // private - use Arctan instead.
 	float Arctan(float arg);
 	
 	float Log(float base, float arg);
