@@ -21,7 +21,7 @@
 
 #include "../include/MathTester.h"
 
-float Ougi::MathTester::FLOAT_TOLERANCE = 0.1f;
+float Ougi::MathTester::FLOAT_TOLERANCE = 0.07f; // tolerance of floating point errors to FLOAT_TOLERANCE% of expected value.
 unsigned int Ougi::MathTester::TIMES = 10000000;
 std::clock_t Ougi::MathTester::start = std::clock();
 std::clock_t Ougi::MathTester::end = std::clock();
@@ -120,9 +120,13 @@ void Ougi::MathTester::Test()
 	ftestf("Ougi::Arctan", 4.89f, Ougi::Arctan(4.89f), 1.36907f);
 	ftestf("Ougi::Arctan", 13.45f, Ougi::Arctan(13.45f), 1.49658f);
 	
+	fftestf("Ougi::Log", 2.0f, 8.0f, Ougi::Log(2.0f, 8.0f), 3.0f);
+	// more tests needed for Ougi::Log
+	
 	fftestf("Ougi::Pow", 3, 4, Ougi::Pow(3, 4), 81);
-	fftestf("Ougi::Pow", 5.4f, 3, Ougi::Pow(5.4f, 3), 157.464f);
+	fftestf("Ougi::Pow", 5.4f, 3, Ougi::Pow(5.4f, 3u), 157.464f);
 	fftestf("Ougi::Pow", 19.2f, -5, Ougi::Pow(19.2f, -5), 0.00000038326f);
+	fftestf("Ougi::Pow", 7.4f, 3.2f, Ougi::Pow(7.4f, 3.2f), 604.702f);
 	
 	std::cout << std::endl;
 }
@@ -138,10 +142,10 @@ void Ougi::MathTester::Benchmark()
 	fbenchmarkf("Ougi::Sqrt", Ougi::Sqrt, 7346.123f);
 	
 	fbenchmarkf("std::abs", std::abs, 4.6f);
-	fbenchmarkf("Ougi::abs", Ougi::Abs, 4.6f);
+	fbenchmarkf("Ougi::Abs", Ougi::Abs, 4.6f);
 	
 	fbenchmarkf("std::floor", std::floor, -3.2f);
-	fbenchmarki("Ougi::floor", Ougi::Floor, -3.2f);
+	fbenchmarki("Ougi::Floor", Ougi::Floor, -3.2f);
 	
 	fbenchmarkf("std::ceil", std::ceil, -3.2f);
 	fbenchmarki("Ougi::Ceiling", Ougi::Ceiling, -3.2f);
@@ -179,7 +183,8 @@ void Ougi::MathTester::Benchmark()
 void Ougi::MathTester::ftestf(const char* name, float input, float val, float expected)
 {
 	std::cout << name << "(" << input << "): " << val << " ~= " << expected << ", ";
-	if (Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
 	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
 	std::cout << std::endl;
 }
@@ -187,7 +192,8 @@ void Ougi::MathTester::ftestf(const char* name, float input, float val, float ex
 void Ougi::MathTester::fftestf(const char* name, float input1, float input2, float val, float expected)
 {
 	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " ~= " << expected << ", ";
-	if (Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
 	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
 	std::cout << std::endl;
 }
@@ -195,7 +201,8 @@ void Ougi::MathTester::fftestf(const char* name, float input1, float input2, flo
 void Ougi::MathTester::ffftestf(const char* name, float input1, float input2, float input3, float val, float expected)
 {
 	std::cout << name << "(" << input1 << ", " << input2 << ", " << input3 << "): " << val << " ~= " << expected << ", ";
-	if (Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
 	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
 	std::cout << std::endl;
 }

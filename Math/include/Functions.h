@@ -50,9 +50,6 @@ namespace Ougi
 	
 	float Log(float base, float arg);
 	
-	float Exp(int power);
-	float Exp(float power);
-	
 	float Pow(float base, unsigned int power);
 	float Pow(float base, int power);
 	float Pow(float base, float power);

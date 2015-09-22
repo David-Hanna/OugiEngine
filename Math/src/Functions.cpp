@@ -253,18 +253,6 @@ float Ougi::Log(float base, float arg)
 	return 0.0f;
 }
 
-float Ougi::Exp(int power)
-{
-	// TODO
-	return 0.0f;
-}
-
-float Ougi::Exp(float power)
-{
-	// TODO
-	return 0.0f;
-}
-
 float Ougi::Pow(float base, unsigned int power)
 {
 	float result = 1;
