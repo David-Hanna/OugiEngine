@@ -59,14 +59,25 @@ void Ougi::MathTester::Test()
 	ftestf("Ougi::Abs", -4.6f, Ougi::Abs(-4.6f), 4.6f);
 	
 	ftesti("Ougi::Floor", 32.0f, Ougi::Floor(32.0f), 32);
+	ftesti("Ougi::Floor", 92.1f, Ougi::Floor(92.1f), 92);
 	ftesti("Ougi::Floor", 45.678f, Ougi::Floor(45.678f), 45);
 	ftesti("Ougi::Floor", -32.0f, Ougi::Floor(-32.0f), -32);
+	ftesti("Ougi::Floor", -92.1f, Ougi::Floor(-92.1f), -93);
 	ftesti("Ougi::Floor", -45.678f, Ougi::Floor(-45.678f), -46);
 	
 	ftesti("Ougi::Ceiling", 32.0f, Ougi::Ceiling(32.0f), 32);
+	ftesti("Ougi::Ceiling", 92.1f, Ougi::Ceiling(92.1f), 93);
 	ftesti("Ougi::Ceiling", 45.678f, Ougi::Ceiling(45.678f), 46);
 	ftesti("Ougi::Ceiling", -32.0f, Ougi::Ceiling(-32.0f), -32);
+	ftesti("Ougi::Ceiling", -92.1f, Ougi::Ceiling(-92.1f), -92);
 	ftesti("Ougi::Ceiling", -45.678f, Ougi::Ceiling(-45.678f), -45);
+	
+	ftesti("Ougi::Round", 32.0f, Ougi::Round(32.0f), 32);
+	ftesti("Ougi::Round", 92.1f, Ougi::Round(92.1f), 92);
+	ftesti("Ougi::Round", 45.678f, Ougi::Round(45.678f), 46);
+	ftesti("Ougi::Round", -32.0f, Ougi::Round(-32.0f), -32);
+	ftesti("Ougi::Round", -92.1f, Ougi::Round(-92.1f), -92);
+	ftesti("Ougi::Round", -45.678f, Ougi::Round(-45.678f), -46);
 	
 	ffftestf("Ougi::ModFloat", 42.0f, 0.0f, 8.0f, Ougi::ModFloat(42.0f, 0.0f, 8.0f), 2.0f);
 	ffftestf("Ougi::ModFloat", 43.567f, 2.45, 5.67, Ougi::ModFloat(43.567f, 2.45, 5.67), 4.927f);
@@ -120,8 +131,26 @@ void Ougi::MathTester::Test()
 	ftestf("Ougi::Arctan", 4.89f, Ougi::Arctan(4.89f), 1.36907f);
 	ftestf("Ougi::Arctan", 13.45f, Ougi::Arctan(13.45f), 1.49658f);
 	
-	fftestf("Ougi::Log", 2.0f, 8.0f, Ougi::Log(2.0f, 8.0f), 3.0f);
-	// more tests needed for Ougi::Log
+	ftestf("Ougi::Ln", 1.0f, Ougi::Ln(1.0f), 0.0f);
+	ftestf("Ougi::Ln", 13.4f, Ougi::Ln(13.4f), 2.59525f);
+	ftestf("Ougi::Ln", 5.8f, Ougi::Ln(5.8f), 1.75785f);
+	ftestf("Ougi::Ln", 34.2f, Ougi::Ln(34.2f), 3.53222f);
+	
+	ftestf("Ougi::Log2", 1.0f, Ougi::Log2(1.0f), 0.0f);
+	ftestf("Ougi::Log2", 13.4f, Ougi::Log2(13.4f), 1.1271f);
+	ftestf("Ougi::Log2", 5.8f, Ougi::Log2(5.8f), 0.763427f);
+	ftestf("Ougi::Log2", 34.2f, Ougi::Log2(34.2f), 1.53403f);
+	
+	ftestf("Ougi::Log10", 1.0f, Ougi::Log10(1.0f), 0.0f);
+	ftestf("Ougi::Log10", 13.4f, Ougi::Log10(13.4f), 1.1271f);
+	ftestf("Ougi::Log10", 5.8f, Ougi::Log10(5.8f), 0.763427f);
+	ftestf("Ougi::Log10", 34.2f, Ougi::Log10(34.2f), 1.53403f);
+	
+	ftestf("Ougi::Exp", 4, Ougi::Exp(4), 54.5982f);
+	ftestf("Ougi::Exp", 3, Ougi::Exp(3u), 20.0855f);
+	ftestf("Ougi::Exp", -5, Ougi::Exp(-5), 0.00673795f);
+	ftestf("Ougi::Exp", -6.1f, Ougi::Exp(-6.1f), 0.00224286f);
+	ftestf("Ougi::Exp", 3.2f, Ougi::Exp(3.2f), 24.5325f);
 	
 	fftestf("Ougi::Pow", 3, 4, Ougi::Pow(3, 4), 81);
 	fftestf("Ougi::Pow", 5.4f, 3, Ougi::Pow(5.4f, 3u), 157.464f);
@@ -152,25 +181,31 @@ void Ougi::MathTester::Benchmark()
 	
 	fffbenchmarkf("Ougi::ModFloat", Ougi::ModFloat, -6.78152f, 9.999f, 21.054f);
 	
-	dbenchmarkd("std::sin", std::sin, 56.321f);
+	fbenchmarkf("std::sin", std::sin, 56.321f);
 	fbenchmarkf("Ougi::Sin", Ougi::Sin, 56.321f);
 	
-	dbenchmarkd("std::cos", std::cos, 56.321f);
+	fbenchmarkf("std::cos", std::cos, 56.321f);
 	fbenchmarkf("Ougi::Cos", Ougi::Cos, 56.321f);
 	
-	dbenchmarkd("std::tan", std::tan, 56.321f);
+	fbenchmarkf("std::tan", std::tan, 56.321f);
 	fbenchmarkf("Ougi::Tan", Ougi::Tan, 56.321f);
 	
-	dbenchmarkd("std::asin", std::asin, 0.321f);
+	fbenchmarkf("std::asin", std::asin, 0.321f);
 	fbenchmarkf("Ougi::Arcsin", Ougi::Arcsin, 0.321f);
 	
-	dbenchmarkd("std::acos", std::acos, 0.321f);
+	fbenchmarkf("std::acos", std::acos, 0.321f);
 	fbenchmarkf("Ougi::Arccos", Ougi::Arccos, 0.321f);
 	
-	dbenchmarkd("std::atan", std::atan, 56.321f);
+	fbenchmarkf("std::atan", std::atan, 56.321f);
 	fbenchmarkf("Ougi::Arctan", Ougi::Arctan, 56.321f);
 	
-	ddbenchmarkd("std::pow", std::pow, 342.6745f, 4.0f);
+	fbenchmarkf("std::Exp", std::exp, 56.321f);
+	fbenchmarkf("Ougi::Exp", Ougi::Exp, 56.321f);
+	
+	fbenchmarkf("std::log", std::log, 32.1534f);
+	fbenchmarkf("Ougi::Ln", Ougi::Ln, 32.1534f);
+	
+	ffbenchmarkf("std::pow", std::pow, 342.6745f, 4.0f);
 	fubenchmarkf("Ougi::Pow(float, unsigned int)", Ougi::Pow, 342.7645f, 4u);
 	fibenchmarkf("Ougi::Pow(float, positive int)", Ougi::Pow, 342.7645f, 4);
 	fibenchmarkf("Ougi::Pow(float, negative int)", Ougi::Pow, 342.7645f, -4);

@@ -24,7 +24,13 @@
 
 #include "Constants.h"
 
+#include <iostream>
+
 #define EXTRA_PRECISION  // for sin and cos, lose a little speed for more accuracy. still faster than std::sin/cos
+
+/*
+ * FIXME: CHANGE ALL DIVISIONS TO MULTIPLICATIONS
+ */
 
 namespace Ougi
 {
@@ -35,6 +41,7 @@ namespace Ougi
 	
 	int Floor(float arg);
 	int Ceiling(float arg);
+	int Round(float arg);
 	
 	float ModFloat(float val, float start, float end);
 
@@ -49,7 +56,10 @@ namespace Ougi
 	float Ln(float arg);
 	float Log2(float arg);
 	float Log10(float arg);
-	float Log(float base, float arg);
+	
+	float Exp(unsigned int power);
+	float Exp(int power);
+	float Exp(float power);
 	
 	float Pow(float base, unsigned int power);
 	float Pow(float base, int power);
@@ -58,7 +68,9 @@ namespace Ougi
 	unsigned int Factorial(unsigned int arg);
 	
 	float __ApproximateTan(float rads); // private - use Tan instead.
+	void __GetScientificNotation(float arg, float& significand, int& exponent);
 	float __ApproximateLn(float arg); // private - use Ln instead.
+	float __ApproximateFractionalExponent(float arg);
 }
 
 #endif

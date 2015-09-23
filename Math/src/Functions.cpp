@@ -78,6 +78,32 @@ int Ougi::Ceiling(float arg)
 	}
 }
 
+int Ougi::Round(float arg)
+{
+	if (arg < 0.0f)
+	{
+		if ((long)arg - arg < 0.5f)
+		{
+			return Ceiling(arg);
+		}
+		else
+		{
+			return Floor(arg);
+		}
+	}
+	else
+	{
+		if (arg - (long)arg < 0.5f)
+		{
+			return Floor(arg);
+		}
+		else
+		{
+			return Ceiling(arg);
+		}
+	}
+}
+
 float Ougi::ModFloat(float val, float start, float end)
 {
 	if (val < start || val > end)
@@ -242,9 +268,25 @@ float Ougi::Arctan(float arg)
 	return arg;
 }
 
+void Ougi::__GetScientificNotation(float arg, float& significand, int& exponent)
+{
+	significand = arg;
+	exponent = 0;
+	while (significand >= 10.0f)
+	{
+		significand *= 0.1f;
+		++exponent;
+	}
+	while (significand < 1.0f)
+	{
+		significand *= 10.0f;
+		--exponent;
+	}
+}
+
 float Ougi::__ApproximateLn(float arg)
 {
-	arg = (arg - 1) / (arg + 1);
+	arg = (arg - 1.0f) / (arg + 1.0f);
 	const float TWO_ARG = arg * arg;
 	const float THREE_ARG = TWO_ARG * arg;
 	const float FIVE_ARG = THREE_ARG * TWO_ARG;
@@ -254,26 +296,86 @@ float Ougi::__ApproximateLn(float arg)
 
 float Ougi::Ln(float arg)
 {
-	// TODO
-	return 0.0f;
+	float significand;
+	int exponent;
+	__GetScientificNotation(arg, significand, exponent);
+	
+	return (2.0f * __ApproximateLn(Sqrt(significand))) + (2.30259f * exponent);
 }
 
 float Ougi::Log2(float arg)
 {
-	// TODO
-	return 0.0f;
+	float significand;
+	int exponent;
+	__GetScientificNotation(arg, significand, exponent);
+	
+	return 2.88539f * __ApproximateLn(Sqrt(significand)) + (0.693147 * exponent);
 }
 
 float Ougi::Log10(float arg)
 {
-	// TODO
-	return 0.0f;
+	float significand;
+	int exponent;
+	__GetScientificNotation(arg, significand, exponent);
+	
+	return 0.868589f * __ApproximateLn(Sqrt(significand)) + exponent;
 }
 
-float Ougi::Log(float base, float arg)
+float Ougi::Exp(unsigned int power)
 {
-	// TODO
-	return 0.0f;
+	return Pow(E, power);
+}
+
+float Ougi::Exp(int power)
+{
+	return Pow(E, power);
+}
+
+float Ougi::__ApproximateFractionalExponent(float arg)
+{
+	const float TWO_ARG = arg * arg;
+	const float THREE_ARG = TWO_ARG * arg;
+	const float FOUR_ARG = THREE_ARG * arg;
+	
+	return 1 + arg + (TWO_ARG / 2.0f) + (THREE_ARG / 6.0f) + (FOUR_ARG / 24.0f) + (FOUR_ARG * arg / 120.0f); 
+}
+
+// NEED TO IMPLEMENT NEGATIVE FLOAT POWERS
+float Ougi::Exp(float power)
+{
+	int nearestInteger = Round(power);
+	float fractional = power - nearestInteger;
+	float result;
+	
+	// if (nearestInteger > 0)
+	// {
+		if (nearestInteger % 2 == 1)
+		{
+			result = E;
+		}
+		else
+		{
+			result = 1;
+		}
+		
+		if (nearestInteger > 1)
+		{
+			const float E_SQUARED = E * E;
+			while (nearestInteger >= 2)
+			{
+				result *= E_SQUARED;
+				nearestInteger -= 2;
+			}
+		}
+		
+		return result * __ApproximateFractionalExponent(fractional);
+	// }
+	// else
+	// {
+		
+	// }
+	
+	// return 0.0f;
 }
 
 float Ougi::Pow(float base, unsigned int power)
@@ -315,8 +417,7 @@ float Ougi::Pow(float base, int power)
 
 float Ougi::Pow(float base, float power)
 {
-	// TODO
-	return 0.0f;
+	return Exp(power * Ln(base));
 }
 
 unsigned int Ougi::Factorial(unsigned int arg)
