@@ -40,14 +40,15 @@ namespace Ougi
 
 	float Sin(float rads);
 	float Cos(float rads);
-	float ApproximateTan(float rads); // private - use Tan instead.
 	float Tan(float rads);
 	
 	float Arcsin(float arg); // domain -1 <= arg <= 1
 	float Arccos(float arg); // domain 0 <= arg <= PI
-	float ApproximateArctan(float arg); // private - use Arctan instead.
 	float Arctan(float arg);
 	
+	float Ln(float arg);
+	float Log2(float arg);
+	float Log10(float arg);
 	float Log(float base, float arg);
 	
 	float Pow(float base, unsigned int power);
@@ -55,6 +56,9 @@ namespace Ougi
 	float Pow(float base, float power);
 	
 	unsigned int Factorial(unsigned int arg);
+	
+	float __ApproximateTan(float rads); // private - use Tan instead.
+	float __ApproximateLn(float arg); // private - use Ln instead.
 }
 
 #endif

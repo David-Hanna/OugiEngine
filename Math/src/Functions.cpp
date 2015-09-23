@@ -112,7 +112,7 @@ float Ougi::Cos(float rads)
 	return rads;
 }
 
-float Ougi::ApproximateTan(float rads)
+float Ougi::__ApproximateTan(float rads)
 {
 	const float TWO_RADS = rads * rads;
 	const float THREE_RADS = TWO_RADS * rads;
@@ -156,12 +156,12 @@ float Ougi::Tan(float rads)
 	
 	if (rads > EIGHTH_PI)
 	{
-		const float HALF_TAN = ApproximateTan(rads / 2.0f);
+		const float HALF_TAN = __ApproximateTan(rads / 2.0f);
 		result = (2 * HALF_TAN) / (1 - (HALF_TAN * HALF_TAN));
 	}
 	else
 	{
-		result = ApproximateTan(rads);
+		result = __ApproximateTan(rads);
 	}
 	
 	if (negative)
@@ -184,13 +184,6 @@ float Ougi::Arcsin(float arg)
 float Ougi::Arccos(float arg)
 {
 	return Arctan(Sqrt(1.0f - (arg * arg)) / arg);
-}
-
-float Ougi::ApproximateArctan(float arg)
-{
-	const float TWO_ARG = arg * arg;
-	const float THREE_ARG = TWO_ARG * arg;
-	return arg - (THREE_ARG / 3.0f) + ((THREE_ARG * TWO_ARG) / 5.0f);
 }
 
 float Ougi::Arctan(float arg)
@@ -229,22 +222,52 @@ float Ougi::Arctan(float arg)
 		identity = false;
 	}
 	
-	float result = ApproximateArctan(arg);
+	const float TWO_ARG = arg * arg;
+	const float THREE_ARG = TWO_ARG * arg;
+	arg = arg - (THREE_ARG / 3.0f) + ((THREE_ARG * TWO_ARG) / 5.0f);
 	
 	if (identity)
 	{
-		result = SIXTH_PI + result;
+		arg = SIXTH_PI + arg;
 	}
 	if (complementaryAngle)
 	{
-		result = HALF_PI - result;
+		arg = HALF_PI - arg;
 	}
 	if (negative)
 	{
-		result = -result;
+		arg = -arg;
 	}
 	
-	return result;
+	return arg;
+}
+
+float Ougi::__ApproximateLn(float arg)
+{
+	arg = (arg - 1) / (arg + 1);
+	const float TWO_ARG = arg * arg;
+	const float THREE_ARG = TWO_ARG * arg;
+	const float FIVE_ARG = THREE_ARG * TWO_ARG;
+	
+	return 2.0f * (arg + (THREE_ARG / 3.0f) + (FIVE_ARG / 5.0f) + ((FIVE_ARG * TWO_ARG) / 7.0f));
+}
+
+float Ougi::Ln(float arg)
+{
+	// TODO
+	return 0.0f;
+}
+
+float Ougi::Log2(float arg)
+{
+	// TODO
+	return 0.0f;
+}
+
+float Ougi::Log10(float arg)
+{
+	// TODO
+	return 0.0f;
 }
 
 float Ougi::Log(float base, float arg)
