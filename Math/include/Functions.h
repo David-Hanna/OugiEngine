@@ -23,8 +23,7 @@
 #define OUGI_MATH_FUNCTIONS_H
 
 #include "Constants.h"
-
-#include <iostream>
+#include "../../Standard/include/Debug.h"
 
 #define EXTRA_PRECISION  // for sin and cos, lose a little speed for more accuracy. still faster than std::sin/cos
 

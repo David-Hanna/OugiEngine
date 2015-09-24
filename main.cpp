@@ -1,6 +1,3 @@
-
-#define DEBUG
-
 #define UNIT_TEST
 #define BENCHMARK
 

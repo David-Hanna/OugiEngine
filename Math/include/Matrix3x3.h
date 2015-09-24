@@ -22,12 +22,9 @@
 #ifndef OUGI_MATH_MATRIX3X3_H
 #define OUGI_MATH_MATRIX3X3_H
 
-#ifdef DEBUG
-#include <iostream>
-#endif
-
 #include "Functions.h"
 #include "Vector3.h"
+#include "../../Standard/include/Debug.h"
 
 namespace Ougi
 {

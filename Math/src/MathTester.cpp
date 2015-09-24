@@ -21,12 +21,226 @@
 
 #include "../include/MathTester.h"
 
+std::string Ougi::MathTester::PASS_STRING = "PASS";
+std::string Ougi::MathTester::FAIL_STRING = "====== ALERT - UNIT TEST FAILED ======";
 float Ougi::MathTester::FLOAT_TOLERANCE = 0.07f; // tolerance of floating point errors to FLOAT_TOLERANCE% of expected value.
 unsigned int Ougi::MathTester::TIMES = 10000000;
 std::clock_t Ougi::MathTester::start = std::clock();
 std::clock_t Ougi::MathTester::end = std::clock();
 
 void Ougi::MathTester::Test()
+{
+	ConstantsTest();
+	FunctionTest();
+	Vector2Test();
+	Vector3Test();
+	Vector4Test();
+	Matrix2x2Test();
+	Matrix3x3Test();
+	Matrix4x4Test();
+}
+
+void Ougi::MathTester::Benchmark()
+{
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << "-         Functions - Benchmarking        -" << std::endl;
+	std::cout << "-------------------------------------------" << std::endl;
+	std::cout << std::endl;
+	
+	dbenchmarkd("std::sqrt", std::sqrt, 7346.123);
+	fbenchmarkf("Ougi::Sqrt", Ougi::Sqrt, 7346.123f);
+	
+	fbenchmarkf("std::abs", std::abs, 4.6f);
+	fbenchmarkf("Ougi::Abs", Ougi::Abs, 4.6f);
+	
+	fbenchmarkf("std::floor", std::floor, -3.2f);
+	fbenchmarki("Ougi::Floor", Ougi::Floor, -3.2f);
+	
+	fbenchmarkf("std::ceil", std::ceil, -3.2f);
+	fbenchmarki("Ougi::Ceiling", Ougi::Ceiling, -3.2f);
+	
+	fffbenchmarkf("Ougi::ModFloat", Ougi::ModFloat, -6.78152f, 9.999f, 21.054f);
+	
+	fbenchmarkf("std::sin", std::sin, 56.321f);
+	fbenchmarkf("Ougi::Sin", Ougi::Sin, 56.321f);
+	
+	fbenchmarkf("std::cos", std::cos, 56.321f);
+	fbenchmarkf("Ougi::Cos", Ougi::Cos, 56.321f);
+	
+	fbenchmarkf("std::tan", std::tan, 56.321f);
+	fbenchmarkf("Ougi::Tan", Ougi::Tan, 56.321f);
+	
+	fbenchmarkf("std::asin", std::asin, 0.321f);
+	fbenchmarkf("Ougi::Arcsin", Ougi::Arcsin, 0.321f);
+	
+	fbenchmarkf("std::acos", std::acos, 0.321f);
+	fbenchmarkf("Ougi::Arccos", Ougi::Arccos, 0.321f);
+	
+	fbenchmarkf("std::atan", std::atan, 56.321f);
+	fbenchmarkf("Ougi::Arctan", Ougi::Arctan, 56.321f);
+	
+	fbenchmarkf("std::Exp", std::exp, 56.321f);
+	fbenchmarkf("Ougi::Exp", Ougi::Exp, 56.321f);
+	
+	fbenchmarkf("std::log", std::log, 32.1534f);
+	fbenchmarkf("Ougi::Ln", Ougi::Ln, 32.1534f);
+	
+	ffbenchmarkf("std::pow", std::pow, 342.6745f, 4.0f);
+	fubenchmarkf("Ougi::Pow(float, unsigned int)", Ougi::Pow, 342.7645f, 4u);
+	fibenchmarkf("Ougi::Pow(float, positive int)", Ougi::Pow, 342.7645f, 4);
+	fibenchmarkf("Ougi::Pow(float, negative int)", Ougi::Pow, 342.7645f, -4);
+	
+	ubenchmarku("Ougi::Factorial", Ougi::Factorial, 8u);
+	
+	std::cout << std::endl;
+}
+
+void Ougi::MathTester::ftestf(const char* name, float input, float val, float expected)
+{
+	std::cout << name << "(" << input << "): " << val << " ~= " << expected << ", ";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else std::cout << FAIL_STRING;
+	std::cout << std::endl;
+}
+
+void Ougi::MathTester::fftestf(const char* name, float input1, float input2, float val, float expected)
+{
+	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " ~= " << expected << ", ";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else std::cout << FAIL_STRING;
+	std::cout << std::endl;
+}
+
+void Ougi::MathTester::ffftestf(const char* name, float input1, float input2, float input3, float val, float expected)
+{
+	std::cout << name << "(" << input1 << ", " << input2 << ", " << input3 << "): " << val << " ~= " << expected << ", ";
+	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << PASS_STRING;
+	else std::cout << FAIL_STRING;
+	std::cout << std::endl;
+}
+
+void Ougi::MathTester::ftesti(const char* name, float input, float val, int expected)
+{
+	std::cout << name << "(" << input << "): " << val << " == " << expected << ", ";
+	if (val == expected) std::cout << PASS_STRING;
+	else std::cout << FAIL_STRING;
+	std::cout << std::endl;
+}
+
+double Ougi::MathTester::duration()
+{
+	return (((end - start) / ((double) CLOCKS_PER_SEC)) * 1000);
+}
+
+void Ougi::MathTester::fbenchmarkf(const char* name, float (*func)(float), float input)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::fffbenchmarkf(const char* name, float (*func)(float, float, float), float input1, float input2, float input3)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2, input3);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::fbenchmarki(const char* name, int (*func)(float), float input)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::dbenchmarkd(const char* name, double (*func)(double), double input)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::ffbenchmarkf(const char* name, float (*func)(float, float), float input1, float input2)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::ddbenchmarkd(const char* name, double (*func)(double, double), double input1, double input2)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::fubenchmarkf(const char* name, float (*func)(float, unsigned int), float input1, unsigned int input2)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::fibenchmarkf(const char* name, float (*func)(float, int), float input1, int input2)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input1, input2);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::ubenchmarku(const char* name, unsigned int (*func)(unsigned int), unsigned int input)
+{
+	start = std::clock();
+	for (unsigned int i = 0; i < TIMES; ++i)
+	{
+		(*func)(input);
+	}
+	end = std::clock();
+	std::cout << name << ": " << duration() << std::endl;
+}
+
+void Ougi::MathTester::PrintPassOrFail(bool expression)
+{
+	if (expression) std::cout << " " << PASS_STRING << std::endl;
+	else std::cout << " " << FAIL_STRING << std::endl;
+}
+
+void Ougi::MathTester::ConstantsTest()
 {
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-                Constants                -" << std::endl;
@@ -43,7 +257,10 @@ void Ougi::MathTester::Test()
 	std::cout << "DEG2RAD: " << Ougi::DEG2RAD << std::endl;
 	std::cout << "RAD2DEG: " << Ougi::RAD2DEG << std::endl;
 	std::cout << std::endl;
-	
+}
+
+void Ougi::MathTester::FunctionTest()
+{
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << "-         Functions - Unit Tests          -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
@@ -160,196 +377,65 @@ void Ougi::MathTester::Test()
 	std::cout << std::endl;
 }
 
-void Ougi::MathTester::Benchmark()
+void Ougi::MathTester::Vector2Test()
 {
 	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << "-         Functions - Benchmarking        -" << std::endl;
+	std::cout << "-         Vector 2 - Unit Tests           -" << std::endl;
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	
-	dbenchmarkd("std::sqrt", std::sqrt, 7346.123);
-	fbenchmarkf("Ougi::Sqrt", Ougi::Sqrt, 7346.123f);
+	Ougi::Vector2 a;
+	std::cout << "Default Constructor: " << a << " == (0, 0)";
+	PrintPassOrFail(a.x == 0.0f && a.y == 0.0f);
 	
-	fbenchmarkf("std::abs", std::abs, 4.6f);
-	fbenchmarkf("Ougi::Abs", Ougi::Abs, 4.6f);
+	Ougi::Vector2 b(3.4f, -28.1f);
+	std::cout << "Custom Constructor: " << b << " == (3.4, -28.1)";
+	PrintPassOrFail(b.x == 3.4f && b.y == -28.1f);
 	
-	fbenchmarkf("std::floor", std::floor, -3.2f);
-	fbenchmarki("Ougi::Floor", Ougi::Floor, -3.2f);
+	a = b;
+	std::cout << "Assignment Operator: " << a << " = " << b;
+	PrintPassOrFail(a.x == b.x && a.y == b.y);
 	
-	fbenchmarkf("std::ceil", std::ceil, -3.2f);
-	fbenchmarki("Ougi::Ceiling", Ougi::Ceiling, -3.2f);
+	a = -a;
+	std::cout << "Unary Negative Operator: " << a << " == (-3.4, 28.1)";
+	PrintPassOrFail(a.x == -3.4f && a.y == 28.1f);
 	
-	fffbenchmarkf("Ougi::ModFloat", Ougi::ModFloat, -6.78152f, 9.999f, 21.054f);
+	a = a + b;
+	std::cout << "Addition Operator: " << a << " == (0, 0)";
+	PrintPassOrFail(a.x == 0.0f && a.y == 0.0f);
 	
-	fbenchmarkf("std::sin", std::sin, 56.321f);
-	fbenchmarkf("Ougi::Sin", Ougi::Sin, 56.321f);
+	a = a - b;
+	std::cout << "Subtraction Operator: " << a << " == (-3.4f, 28.1f)";
+	PrintPassOrFail(a.x == -3.4f && a.y == 28.1f);
 	
-	fbenchmarkf("std::cos", std::cos, 56.321f);
-	fbenchmarkf("Ougi::Cos", Ougi::Cos, 56.321f);
-	
-	fbenchmarkf("std::tan", std::tan, 56.321f);
-	fbenchmarkf("Ougi::Tan", Ougi::Tan, 56.321f);
-	
-	fbenchmarkf("std::asin", std::asin, 0.321f);
-	fbenchmarkf("Ougi::Arcsin", Ougi::Arcsin, 0.321f);
-	
-	fbenchmarkf("std::acos", std::acos, 0.321f);
-	fbenchmarkf("Ougi::Arccos", Ougi::Arccos, 0.321f);
-	
-	fbenchmarkf("std::atan", std::atan, 56.321f);
-	fbenchmarkf("Ougi::Arctan", Ougi::Arctan, 56.321f);
-	
-	fbenchmarkf("std::Exp", std::exp, 56.321f);
-	fbenchmarkf("Ougi::Exp", Ougi::Exp, 56.321f);
-	
-	fbenchmarkf("std::log", std::log, 32.1534f);
-	fbenchmarkf("Ougi::Ln", Ougi::Ln, 32.1534f);
-	
-	ffbenchmarkf("std::pow", std::pow, 342.6745f, 4.0f);
-	fubenchmarkf("Ougi::Pow(float, unsigned int)", Ougi::Pow, 342.7645f, 4u);
-	fibenchmarkf("Ougi::Pow(float, positive int)", Ougi::Pow, 342.7645f, 4);
-	fibenchmarkf("Ougi::Pow(float, negative int)", Ougi::Pow, 342.7645f, -4);
-	
-	ubenchmarku("Ougi::Factorial", Ougi::Factorial, 8u);
+	float dot = a * b;
+	std::cout << "Vector Multiplication (Dot Product): " << dot << " ~= -801.17";
+	PrintPassOrFail( (Abs(dot + 801.17f) / dot) < FLOAT_TOLERANCE);
 	
 	std::cout << std::endl;
 }
 
-void Ougi::MathTester::ftestf(const char* name, float input, float val, float expected)
+void Ougi::MathTester::Vector3Test()
 {
-	std::cout << name << "(" << input << "): " << val << " ~= " << expected << ", ";
-	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
-	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	
 }
 
-void Ougi::MathTester::fftestf(const char* name, float input1, float input2, float val, float expected)
+void Ougi::MathTester::Vector4Test()
 {
-	std::cout << name << "(" << input1 << ", " << input2 << "): " << val << " ~= " << expected << ", ";
-	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
-	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	
 }
 
-void Ougi::MathTester::ffftestf(const char* name, float input1, float input2, float input3, float val, float expected)
+void Ougi::MathTester::Matrix2x2Test()
 {
-	std::cout << name << "(" << input1 << ", " << input2 << ", " << input3 << "): " << val << " ~= " << expected << ", ";
-	if (expected == 0.0f && Ougi::Abs(val - expected) < FLOAT_TOLERANCE) std::cout << "PASS";
-	else if (Ougi::Abs(val - expected) / expected < FLOAT_TOLERANCE) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	
 }
 
-void Ougi::MathTester::ftesti(const char* name, float input, float val, int expected)
+void Ougi::MathTester::Matrix3x3Test()
 {
-	std::cout << name << "(" << input << "): " << val << " == " << expected << ", ";
-	if (val == expected) std::cout << "PASS";
-	else std::cout << "====== ALERT: UNIT TEST FAILED ======";
-	std::cout << std::endl;
+	
 }
 
-double Ougi::MathTester::duration()
+void Ougi::MathTester::Matrix4x4Test()
 {
-	return (((end - start) / ((double) CLOCKS_PER_SEC)) * 1000);
-}
-
-void Ougi::MathTester::fbenchmarkf(const char* name, float (*func)(float), float input)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::fffbenchmarkf(const char* name, float (*func)(float, float, float), float input1, float input2, float input3)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input1, input2, input3);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::fbenchmarki(const char* name, int (*func)(float), float input)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::dbenchmarkd(const char* name, double (*func)(double), double input)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::ffbenchmarkf(const char* name, float (*func)(float, float), float input1, float input2)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input1, input2);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::ddbenchmarkd(const char* name, double (*func)(double, double), double input1, double input2)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input1, input2);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::fubenchmarkf(const char* name, float (*func)(float, unsigned int), float input1, unsigned int input2)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input1, input2);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::fibenchmarkf(const char* name, float (*func)(float, int), float input1, int input2)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input1, input2);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
-}
-
-void Ougi::MathTester::ubenchmarku(const char* name, unsigned int (*func)(unsigned int), unsigned int input)
-{
-	start = std::clock();
-	for (int i = 0; i < TIMES; ++i)
-	{
-		(*func)(input);
-	}
-	end = std::clock();
-	std::cout << name << ": " << duration() << std::endl;
+	
 }

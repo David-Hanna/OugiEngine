@@ -22,11 +22,8 @@
 #ifndef OUGI_MATH_VECTOR2_H
 #define OUGI_MATH_VECTOR2_H
 
-#ifdef DEBUG
-#include <iostream>
-#endif
-
 #include "Functions.h"
+#include "../../Standard/include/Debug.h"
 
 namespace Ougi
 {

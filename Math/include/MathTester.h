@@ -23,6 +23,7 @@
 #include <cmath>
 #include <limits>
 #include <ctime>
+#include <string>
 
 #include "Functions.h"
 #include "Matrix2x2.h"
@@ -42,6 +43,8 @@ namespace Ougi
 		
 	private:
 		// Unit Testing
+		static std::string PASS_STRING;
+		static std::string FAIL_STRING;
 		static float FLOAT_TOLERANCE;
 		
 		static void ftestf(const char* name, float input, float val, float expected);
@@ -65,5 +68,16 @@ namespace Ougi
 		static void fubenchmarkf(const char* name, float (*func)(float, unsigned int), float input1, unsigned int input2);
 		static void fibenchmarkf(const char* name, float (*func)(float, int), float input1, int input2);
 		static void ubenchmarku(const char* name, unsigned int (*func)(unsigned int), unsigned int input);
+		
+		static void PrintPassOrFail(bool expression);
+		
+		static void ConstantsTest();
+		static void FunctionTest();
+		static void Vector2Test();
+		static void Vector3Test();
+		static void Vector4Test();
+		static void Matrix2x2Test();
+		static void Matrix3x3Test();
+		static void Matrix4x4Test();
 	};
 }
