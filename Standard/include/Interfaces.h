@@ -48,22 +48,22 @@ namespace Ougi
 	template<typename T>
 	class Iterable
 	{
-		Iterator<T> Iterator() const = 0;
+		Iterator<T> GetIterator() const = 0;
 	};
 	
 	template<typename T>
 	class Collection : public Iterable<T>
 	{
 		bool Add(T item) = 0;
-		bool AddAll(Collection<T> items) = 0;
+		bool AddAll(const Collection<T>& items) = 0;
 		void Clear() = 0;
 		bool Contains(T item) const = 0;
-		bool ContainsAll(Collection<T> items) const = 0;
+		bool ContainsAll(const Collection<T>& items) const = 0;
 		bool IsEmpty() const = 0;
-		Iterator<T> Iterator() const = 0;
-		bool Remove(T item) = 0;
-		bool RemoveAll(Collection<T> items) = 0;
-		bool RetainAll(Collection<T> items) = 0;
+		Iterator<T> GetIterator() const = 0;
+		bool Remove(const T& item) = 0;
+		bool RemoveAll(const Collection<T>& items) = 0;
+		bool RetainAll(const Collection<T>& items) = 0;
 		unsigned int Size() const = 0;
 		T* ToArray() const = 0;
 	};

@@ -405,12 +405,40 @@ void Ougi::MathTester::Vector2Test()
 	PrintPassOrFail(a.x == 0.0f && a.y == 0.0f);
 	
 	a = a - b;
-	std::cout << "Subtraction Operator: " << a << " == (-3.4f, 28.1f)";
+	std::cout << "Subtraction Operator: " << a << " == (-3.4, 28.1)";
 	PrintPassOrFail(a.x == -3.4f && a.y == 28.1f);
 	
 	float dot = a * b;
-	std::cout << "Vector Multiplication (Dot Product): " << dot << " ~= -801.17";
-	PrintPassOrFail( (Abs(dot + 801.17f) / dot) < FLOAT_TOLERANCE);
+	std::cout << "Vector Multiplication (Dot Product): " << dot << " == -801.17";
+	PrintPassOrFail( (Abs(dot + 801.17f) / dot) < FLOAT_TOLERANCE );
+	
+	a = a * 3.14f;
+	std::cout << "Scalar-Vector Multiplication: " << a << " == (-10.676, 88.234)";
+	PrintPassOrFail( (Abs(a.x + 10.676f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 88.234f) / a.y) < FLOAT_TOLERANCE );
+	
+	a = a / 3.14f;
+	std::cout << "Scalar-Vector Division: " << a << " == (-3.4, 28.1)";
+	PrintPassOrFail( (Abs(a.x + -3.4f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 28.1f) / a.y) < FLOAT_TOLERANCE );
+	
+	a += b;
+	std::cout << "Addition-Assignment Operator: " << a << " == (0.0, 0.0)";
+	PrintPassOrFail( Abs(a.x) < FLOAT_TOLERANCE && Abs(a.y) < FLOAT_TOLERANCE );
+	
+	a -= b;
+	std::cout << "Subtraction-Assignment Operator: " << a << " == (-3.4, 28.1)";
+	PrintPassOrFail( (Abs(a.x + -3.4f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 28.1f) / a.y) < FLOAT_TOLERANCE );
+	
+	a *= 3.14f;
+	std::cout << "Scalar-Multiplication-Assignment Operator: " << a << " == (-10.676, 88.234)";
+	PrintPassOrFail( (Abs(a.x + 10.676f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 88.234f) / a.y) < FLOAT_TOLERANCE );
+	
+	a /= 3.14f;
+	std::cout << "Scalar-Division-Assignment Operator: " << a << " == (-3.4, 28.1)";
+	PrintPassOrFail( (Abs(a.x + -3.4f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 28.1f) / a.y) < FLOAT_TOLERANCE );
+	
+	std::cout << "Equality Operator: " << (a == a) << " == 1, and " << (a == Vector2(3.14f, 2.71828f)) << " == 0, and "
+			  << (a == b) << " == 0";
+	PrintPassOrFail(a == a && !(a == Vector2(3.14f, 2.71828f)) && !(a == b));
 	
 	std::cout << std::endl;
 }

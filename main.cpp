@@ -1,5 +1,5 @@
 #define UNIT_TEST
-#define BENCHMARK
+//#define BENCHMARK
 
 #define MATH
 #define STANDARD

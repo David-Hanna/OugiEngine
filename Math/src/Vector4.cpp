@@ -21,20 +21,25 @@
 
 #include "../include/Vector4.h"
 
-bool Ougi::Vector4::Equals(const Ougi::Vector4& rhs, const float tolerance) const
+bool Ougi::Vector4::operator==(const Vector4& rhs) const
 {
-	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance);
+	return MagnitudeEquals(rhs) && DirectionEquals(rhs);
 }
 
 bool Ougi::Vector4::MagnitudeEquals(const Ougi::Vector4& rhs, const float tolerance) const
 {
-	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) <= tolerance;
 }
 
 bool Ougi::Vector4::DirectionEquals(const Ougi::Vector4& rhs, const float tolerance) const
 {
 	// TODO
 	return false;
+}
+
+bool Ougi::Vector4::operator<(const Ougi::Vector4& rhs) const
+{
+	return LengthSquared() < rhs.LengthSquared();
 }
 
 Ougi::Vector4 Ougi::Vector4::Normalize()

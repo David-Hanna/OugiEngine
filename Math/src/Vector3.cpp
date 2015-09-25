@@ -21,20 +21,25 @@
 
 #include "../include/Vector3.h"
 
-bool Ougi::Vector3::Equals(const Ougi::Vector3& rhs, const float tolerance) const
+bool Ougi::Vector3::operator==(const Vector3& rhs) const
 {
-	return MagnitudeEquals(rhs, tolerance) && DirectionEquals(rhs, tolerance);
+	return MagnitudeEquals(rhs) && DirectionEquals(rhs);
 }
 
 bool Ougi::Vector3::MagnitudeEquals(const Ougi::Vector3& rhs, const float tolerance) const
 {
-	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) < tolerance;
+	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) <= tolerance;
 }
 
 bool Ougi::Vector3::DirectionEquals(const Ougi::Vector3& rhs, const float tolerance) const
 {
 	// TODO
 	return false;
+}
+
+bool Ougi::Vector3::operator<(const Ougi::Vector3& rhs) const
+{
+	return LengthSquared() < rhs.LengthSquared();
 }
 
 Ougi::Vector3 Ougi::Vector3::Normalize()
