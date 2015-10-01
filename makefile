@@ -6,7 +6,7 @@
 #
 
 # searches these directories for cpp files when a source file is missing
-vpath %.cpp ./Math/src
+vpath %.cpp ./Math/src ./Collections/src
 
 # define the C compiler to use
 CC = g++
@@ -16,7 +16,7 @@ CC = g++
 CFLAGS = -std=c++11 -Wall -g -O2
 
 # define any directories containing header files other than /usr/include
-#INCLUDES = /Math/include /Physics/include /Collections/include /Standard/include
+#INCLUDES = ./Math/include ./Physics/include ./Collections/include ./Standard/include
 
 # define the cpp source files
 SRCS = main.cpp \
@@ -27,7 +27,8 @@ Vector4.cpp \
 Matrix2x2.cpp \
 Matrix3x3.cpp \
 Matrix4x4.cpp \
-MathTester.cpp
+MathTester.cpp \
+SinglyLinkedList.cpp
 
 # define the cpp object files 
 #

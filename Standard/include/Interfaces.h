@@ -27,6 +27,7 @@ namespace Ougi
 	template<typename T>
 	class Comparable
 	{
+	public:
 		virtual bool operator==(const T& rhs) const = 0;
 		bool operator!=(const T& rhs) const { return !operator==(rhs); }
 		virtual bool operator<(const T& rhs) const = 0;
@@ -39,33 +40,35 @@ namespace Ougi
 	class Iterator
 	{
 	public:
-		bool HasNext() const = 0;
-		T& Next() = 0;
-		const T& Next() const = 0;
-		void Remove() = 0;
+		virtual bool HasNext() const = 0;
+		virtual T& Next() = 0;
+		virtual const T& Next() const = 0;
+		virtual void Remove() = 0;
 	};
 	
 	template<typename T>
 	class Iterable
 	{
-		Iterator<T> GetIterator() const = 0;
+	public:
+		virtual Iterator<T> GetIterator() const = 0;
 	};
 	
 	template<typename T>
 	class Collection : public Iterable<T>
 	{
-		bool Add(T item) = 0;
-		bool AddAll(const Collection<T>& items) = 0;
-		void Clear() = 0;
-		bool Contains(T item) const = 0;
-		bool ContainsAll(const Collection<T>& items) const = 0;
-		bool IsEmpty() const = 0;
-		Iterator<T> GetIterator() const = 0;
-		bool Remove(const T& item) = 0;
-		bool RemoveAll(const Collection<T>& items) = 0;
-		bool RetainAll(const Collection<T>& items) = 0;
-		unsigned int Size() const = 0;
-		T* ToArray() const = 0;
+	public:
+		virtual bool Add(const T& item) = 0;
+		virtual bool AddAll(const Collection<T>& items) = 0;
+		virtual void Clear() = 0;
+		virtual bool Contains(const T& item) const = 0;
+		virtual bool ContainsAll(const Collection<T>& items) const = 0;
+		virtual bool IsEmpty() const = 0;
+		virtual Iterator<T> GetIterator() const = 0;
+		virtual bool Remove(const T& item) = 0;
+		virtual bool RemoveAll(const Collection<T>& items) = 0;
+		virtual bool RetainAll(const Collection<T>& items) = 0;
+		virtual unsigned int Size() const = 0;
+		virtual T* ToArray() const = 0;
 	};
 }
 

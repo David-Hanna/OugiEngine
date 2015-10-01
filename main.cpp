@@ -9,6 +9,7 @@
 #endif
 
 #ifdef STANDARD
+#include "Collections/include/SinglyLinkedList.h"
 #endif
 
 int main(int argc, char* argv[])
