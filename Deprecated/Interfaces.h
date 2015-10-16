@@ -52,24 +52,51 @@ namespace Ougi
 	public:
 		virtual Iterator<T> GetIterator() const = 0;
 	};
-	
-	template<typename T>
-	class Collection : public Iterable<T>
+	 
+	// A generic form of collection which simply stores items
+	// without assuming anything about either the key to access
+	// that item, or the item's type. Such a collection means items
+	// cannot be compared to each other and the order is arbitrary.
+	// i.e. hash-tables, heaps, etc.
+	template<typename KeyType, typename ItemType>
+	class Collection : public Iterable<ItemType>
 	{
 	public:
-		virtual bool Add(const T& item) = 0;
-		virtual bool AddAll(const Collection<T>& items) = 0;
+		virtual ItemType& operator[](const KeyType& key) = 0;
+	
+		virtual bool Add(const ItemType& item) = 0;
+		virtual bool Insert(const KeyType& index, const ItemType& item) = 0;
+		virtual bool Remove(const KeyType& key) = 0;
+		
 		virtual void Clear() = 0;
-		virtual bool Contains(const T& item) const = 0;
-		virtual bool ContainsAll(const Collection<T>& items) const = 0;
 		virtual bool IsEmpty() const = 0;
-		virtual Iterator<T> GetIterator() const = 0;
-		virtual bool Remove(const T& item) = 0;
-		virtual bool RemoveAll(const Collection<T>& items) = 0;
-		virtual bool RetainAll(const Collection<T>& items) = 0;
+		virtual bool ContainsKey(const KeyType& key) const = 0;
+		
+		virtual Iterator<ItemType> GetIterator() const = 0;
+		
 		virtual unsigned int Size() const = 0;
-		virtual T* ToArray() const = 0;
+		virtual ItemType* ToArray() const = 0;
 	};
+	
+	
+	// A form of collection in which items are comparable, leading to the
+	// ability to remove by value, check if the collection contains a value,
+	// sort the collection, and do fast searches.
+	// i.e. indexed-lists, sorted binary trees, etc.
+	template <typename ItemType>
+	class OrderableCollection : public Collection<unsigned int, Comparable<ItemType>>
+	{
+		virtual bool RemoveItem(const Comparable<ItemType>& item) = 0;
+		virtual bool Contains(const Comparable<ItemType>& item) const = 0;
+		
+		virtual void Sort() = 0;
+	};
+	
+	template <typename ItemType>
+	void Sort(Collection<ItemType>, int (*compareFunction)(ItemType a, ItemType b));
+	
+	template <typename ItemType>
+	void Search(Collection<ItemType>, int (*compareFunction)(ItemType a, ItemType b));
 }
 
 #endif
