@@ -24,11 +24,10 @@
 
 #include "Functions.h"
 #include "../../Standard/include/Debug.h"
-#include "../../Standard/include/Interfaces.h"
 
 namespace Ougi
 {
-	class Vector3 : public Comparable<Vector3>
+	class Vector3
 	{
 	public:
 		float x, y, z, __pad_w;
@@ -50,10 +49,10 @@ namespace Ougi
 		Vector3 operator*=(const float multiplier)					{ x *= multiplier; y *= multiplier; z *= multiplier; return *this; }
 		Vector3 operator/=(const float divisor)						{ x /= divisor; y /= divisor; z /= divisor; return *this; }
 
-		virtual bool operator==(const Vector3& rhs) const override;
+		virtual bool operator==(const Vector3& rhs) const;
 		bool MagnitudeEquals(const Vector3& rhs, const float tolerance = 0.0f) const;
 		bool DirectionEquals(const Vector3& rhs, const float tolerance = 0.0f) const;
-		virtual bool operator<(const Vector3& rhs) const override;
+		virtual bool operator<(const Vector3& rhs) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z); }
 		float Length() const										{ return Ougi::Sqrt(LengthSquared()); }

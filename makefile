@@ -26,8 +26,7 @@ Vector4.cpp \
 Matrix2x2.cpp \
 Matrix3x3.cpp \
 Matrix4x4.cpp \
-MathTester.cpp \
-SinglyLinkedList.cpp
+MathTester.cpp
 
 # define the cpp object files 
 #
