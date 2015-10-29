@@ -5,6 +5,8 @@
 # 'make clean'  removes all .o and executable files
 #
 
+SYSTEM = __OUGI_WINDOWS__# __OUGI_MAC__ __OUGI_LINUX__
+
 # searches these directories for cpp files when a source file is missing
 vpath %.cpp ./Math/src ./Collections/src
 
@@ -13,10 +15,7 @@ CC = g++
 
 # define any compile-time flags
 # -02 for optimization!
-CFLAGS = -std=c++11 -Wall -g -O2
-
-# define any directories containing header files other than /usr/include
-#INCLUDES = ./Math/include ./Physics/include ./Collections/include ./Standard/include
+CFLAGS = -std=c++11 -Wall -g -O2 -D $(SYSTEM)
 
 # define the cpp source files
 SRCS = main.cpp \
@@ -55,7 +54,7 @@ all:    $(MAIN) clean
 	@echo  $(MAIN) has been successfully compiled!
 
 $(MAIN): $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS)
+	$(CC) $(CFLAGS) -o $(MAIN) $(OBJS)
 
 # this is a suffix replacement rule for building .o's from .cpp's
 # it uses automatic variables $<: the name of the prerequisite of

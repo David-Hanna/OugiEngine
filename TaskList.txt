@@ -1,5 +1,4 @@
 
-* Include FixedSizeArray class from Algorithms assignment #1.
-* Write DynamicSizeArray class.
-	- be able to manually set the new size of the array.
-	- be able to pass a growth function for when data is added above capacity.
+* Be able to open a Windows window with an OpenGL context.
+* Add a List-type Collection
+* Add a Map-type Collection
