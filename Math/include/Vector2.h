@@ -23,7 +23,7 @@
 #define OUGI_MATH_VECTOR2_H
 
 #include "Functions.h"
-#include "../../Standard/include/Debug.h"
+#include "../../Common/include/Debug.h"
 
 namespace Ougi
 {
@@ -49,10 +49,8 @@ namespace Ougi
 		Vector2 operator*=(const float multiplier)					{ x *= multiplier; y *= multiplier; return *this; }
 		Vector2 operator/=(const float divisor)						{ x /= divisor; y /= divisor; return *this; }
 
-		virtual bool operator==(const Vector2& rhs) const;
 		bool MagnitudeEquals(const Vector2& rhs, const float tolerance = 0.0f) const;
 		bool DirectionEquals(const Vector2& rhs, const float tolerance = 0.0f) const;
-		virtual bool operator<(const Vector2& rhs) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y); }
 		float Length() const										{ return Ougi::Sqrt(LengthSquared()); }

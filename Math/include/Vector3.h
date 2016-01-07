@@ -23,7 +23,7 @@
 #define OUGI_MATH_VECTOR3_H
 
 #include "Functions.h"
-#include "../../Standard/include/Debug.h"
+#include "../../Common/include/Debug.h"
 
 namespace Ougi
 {
@@ -48,11 +48,9 @@ namespace Ougi
 		Vector3 operator-=(const Vector3& subtrahend)				{ x -= subtrahend.x; y -= subtrahend.y; z -= subtrahend.z; return *this; }
 		Vector3 operator*=(const float multiplier)					{ x *= multiplier; y *= multiplier; z *= multiplier; return *this; }
 		Vector3 operator/=(const float divisor)						{ x /= divisor; y /= divisor; z /= divisor; return *this; }
-
-		virtual bool operator==(const Vector3& rhs) const;
+		
 		bool MagnitudeEquals(const Vector3& rhs, const float tolerance = 0.0f) const;
 		bool DirectionEquals(const Vector3& rhs, const float tolerance = 0.0f) const;
-		virtual bool operator<(const Vector3& rhs) const;
 
 		float LengthSquared() const									{ return (x * x) + (y * y) + (z * z); }
 		float Length() const										{ return Ougi::Sqrt(LengthSquared()); }

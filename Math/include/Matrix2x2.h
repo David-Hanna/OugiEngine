@@ -24,7 +24,7 @@
 
 #include "Functions.h"
 #include "Vector2.h"
-#include "../../Standard/include/Debug.h"
+#include "../../Common/include/Debug.h"
 
 namespace Ougi
 {

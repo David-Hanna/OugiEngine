@@ -5,6 +5,7 @@
 # 'make clean'  removes all .o and executable files
 #
 
+# The system flag determines what OS to compile for.
 SYSTEM = __OUGI_WINDOWS__# __OUGI_MAC__ __OUGI_LINUX__
 
 # searches these directories for cpp files when a source file is missing

@@ -47,7 +47,7 @@ void Ougi::MathTester::Benchmark()
 	std::cout << "-------------------------------------------" << std::endl;
 	std::cout << std::endl;
 	
-	dbenchmarkd("std::sqrt", std::sqrt, 7346.123);
+	dbenchmarkd("std::sqrt", std::sqrt, 7346.123f);
 	fbenchmarkf("Ougi::Sqrt", Ougi::Sqrt, 7346.123f);
 	
 	fbenchmarkf("std::abs", std::abs, 4.6f);
@@ -435,10 +435,6 @@ void Ougi::MathTester::Vector2Test()
 	a /= 3.14f;
 	std::cout << "Scalar-Division-Assignment Operator: " << a << " == (-3.4, 28.1)";
 	PrintPassOrFail( (Abs(a.x + -3.4f) / a.x) < FLOAT_TOLERANCE && (Abs(a.y - 28.1f) / a.y) < FLOAT_TOLERANCE );
-	
-	std::cout << "Equality Operator: " << (a == a) << " == 1, and " << (a == Vector2(3.14f, 2.71828f)) << " == 0, and "
-			  << (a == b) << " == 0";
-	PrintPassOrFail(a == a && !(a == Vector2(3.14f, 2.71828f)) && !(a == b));
 	
 	std::cout << std::endl;
 }

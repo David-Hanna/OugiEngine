@@ -21,11 +21,6 @@
 
 #include "../include/Vector2.h"
 
-bool Ougi::Vector2::operator==(const Ougi::Vector2& rhs) const
-{
-	return MagnitudeEquals(rhs) && DirectionEquals(rhs);
-}
-
 bool Ougi::Vector2::MagnitudeEquals(const Ougi::Vector2& rhs, const float tolerance) const
 {
 	return Ougi::Abs(LengthSquared() - rhs.LengthSquared()) <= tolerance;
@@ -36,11 +31,6 @@ bool Ougi::Vector2::DirectionEquals(const Ougi::Vector2& rhs, const float tolera
 	return ((y < 0.0f && rhs.y < 0.0f) || (y >= 0.0f && rhs.y >= 0.0f))
 		&& ((x < 0.0f && rhs.x < 0.0f) || (x >= 0.0f && rhs.x >= 0.0f)) 
 		&& ( Abs((y / x) - (rhs.y / rhs.x)) <= tolerance );
-}
-
-bool Ougi::Vector2::operator<(const Ougi::Vector2& rhs) const
-{
-	return LengthSquared() < rhs.LengthSquared();
 }
 
 Ougi::Vector2 Ougi::Vector2::Normalize()

@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------------
-// Debug.h
+// Comparable.h
 // Author: David Hanna
 // Copyright (C) 20xx David Hanna, Inc.
 //
@@ -19,13 +19,17 @@
 // along with Ougi Engine.  If not, see <http://www.gnu.org/licenses/>.
 //-------------------------------------------------------------------------------------------
 
-#ifndef OUGI_STANDARD_DEBUGDEFINES_H
-#define OUGI_STANDARD_DEBUGDEFINES_H
+#ifndef OUGI_COMMON_COMPARABLE_H
+#define OUGI_COMMON_COMPARABLE_H
 
-#define DEBUG
-
-#ifdef DEBUG
-#include <iostream>
-#endif
+template <typename T>
+class Comparable
+{
+public:
+	virtual ~Comparable<T>() {}
+	
+	virtual bool operator==(const T& other) const = 0;
+	virtual bool operator!=(const T& other) const { return !this->operator==(other); }
+};
 
 #endif

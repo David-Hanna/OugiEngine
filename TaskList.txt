@@ -1,6 +1,7 @@
 
 * Move opening a Windows window to its own thing, like a MainLoop file.
+* Be able to open a Mac and Linux window.
+* Write the window-opening code in a cross-platform way.
 * Change opening a Windows window to have an OpenGL context and draw some things on it.
 * Add a List-type Collection
 * Add a Map-type Collection
-* Add remaining compare operators to Vectors.
